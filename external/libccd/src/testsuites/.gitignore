@@ -1,0 +1,6 @@
+regressions/tmp.*
+bench-out/*
+*.o
+test
+bench
+bench2

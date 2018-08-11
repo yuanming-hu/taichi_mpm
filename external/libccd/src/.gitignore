@@ -1,0 +1,5 @@
+*.o
+*.a
+ccd/config.h
+ccd/config.h.in
+

@@ -1,0 +1,62 @@
+/** \page cpptut C++ Tutorial
+
+Here is a simple example of some operations supported by particles. You may want
+to look at the includes demo applications and tools in the source tree to see
+more examples.
+
+<h2>Intro</h2>
+
+The C++ API is easy to use. You just need to include 
+<pre>
+#include <Partio.h>
+</pre>
+Everything Partio related is in the Partio namespace. To read a particle file in
+and print the number of particles you could do:
+<pre>
+Partio::ParticlesDataMutable* data=Partio::read("test.bgeo");
+std::cout&lt;&lt;"Number of particles "&lt;&lt;data-&gt;numParticles()&lt;&lt;std::endl;
+</pre>
+Now we could additionally print out the names of all attributes in the particle
+file as 
+<pre>
+for(int i=0;i&lt;data-&gt;numAttributes();i++){
+    Partio::ParticleAttribute attr;
+    data-&gt;attributeInfo(i,attr);
+    std::cout&lt;&lt;"attribute["&lt;&lt;i&lt;&lt;"] is "&lt;&lt;attr.name&lt;&lt;std::endl;
+}
+</pre>
+Now we could convert the data into RenderMan ptc format as
+<pre>
+Partio::write("test.ptc",*data);
+</pre>
+Whenever you are done with a particle set you need to release it as
+<pre>
+data-&gt;release();
+</pre>
+
+<h2>Simple processing</h2>
+
+Suppose we wanted to average all the positions in a particle file. We could do
+that by iterating over each particle and getting the position attribute value as
+follows:
+<pre>
+Partio::ParticleAttribute posAttr;
+if(!data-&gt;attributeInfo("position",attr)
+   || (attr.type != Partio::FLOAT && attr.type != Partio::VECTOR)
+   || attr.count != 3){
+   std::cerr&lt;&lt;"Failed to get proper position attribute"&lt;&lt;std::endl;
+}
+
+float avg[3]={0,0,0};
+
+
+for(int i=0;i&lt;data-&gt;numParticles();i++){
+    float *pos=data-&gt;data<float>(posAttr,i);
+    for(int k=0;k<3;k++) avg[k]+=pos[k];
+}
+for(int k=0;k<3;k++) pos[k]/=data-&gt;numParticles();
+std::cerr&lt;&lt;"avg "&lt;&lt;pos[0]&lt;&lt;" "&lt;&lt;pos[1]&lt;&lt;" "&lt;&lt;pos[2]<<std::endl;
+</pre>
+
+
+*/

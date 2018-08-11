@@ -1,0 +1,75 @@
+# PARTIO SOFTWARE
+# Copyright 2010 Disney Enterprises, Inc. All rights reserved
+# 
+# Redistribution and use in source and binary forms, with or without
+# modification, are permitted provided that the following conditions are
+# met:
+# 
+# * Redistributions of source code must retain the above copyright
+# notice, this list of conditions and the following disclaimer.
+# 
+# * Redistributions in binary form must reproduce the above copyright
+# notice, this list of conditions and the following disclaimer in
+# the documentation and/or other materials provided with the
+# distribution.
+# 
+# * The names "Disney", "Walt Disney Pictures", "Walt Disney Animation
+# Studios" or the names of its contributors may NOT be used to
+# endorse or promote products derived from this software without
+# specific prior written permission from Walt Disney Pictures.
+# 
+# Disclaimer: THIS SOFTWARE IS PROVIDED BY WALT DISNEY PICTURES AND
+# CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING,
+# BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY, FITNESS
+# FOR A PARTICULAR PURPOSE, NONINFRINGEMENT AND TITLE ARE DISCLAIMED.
+# IN NO EVENT SHALL WALT DISNEY PICTURES, THE COPYRIGHT HOLDER OR
+# CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
+# EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+# PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
+# PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND BASED ON ANY
+# THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+# (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+# OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
+import os
+Import('env variant_build_abs variant_install_abs GetInstallPath')
+
+
+
+docTarget=variant_install_abs+'/doc/Partio'
+headers=['#src/lib/Partio.h']
+foo=env.Command("#src/doc/Doxyfile",
+                ["#src/doc/Doxyfile.in"]+headers,
+                "sed 's/\@CMAKE_CURRENT_SOURCE_DIR\@/src\/doc/g' src/doc/Doxyfile.in > src/doc/Doxyfile; echo OUTPUT_DIRECTORY=src/doc/doc >> src/doc/Doxyfile")
+
+                
+
+# Build doxygen if Doxyfile or headers change 
+index=env.Command('#src/doc/doc/html/index.html',  # only target file known in advance 
+foo,
+'doxygen src/doc/Doxyfile')
+
+
+env.Install(docTarget,index) # Now we need the list of files that were produced by Doxygen. 
+
+# => We have to scan the doc dir after Doxygen was run ! 
+# Luckily we can add files to scons internal dependency tree during the build phase! 
+def scanForFurtherDocFiles(target,source,env): 
+    # we do not produce any output here, instead we extend the target list # source[0] a file from the doc dir, e.g.     
+    #index.html.
+    targets=os.listdir(str(source[0].dir)) 
+    #print str(source[0].dir)
+    #print "targets "+repr(targets) 
+    # build rules for index.html are already known => remove it 
+    targets.remove("index.html") 
+    #print "setting install target for files:",targets 
+    for target in targets: env.Install(docTarget,"#src/doc/doc/html/"+target) 
+# now we use this for a command, that depends on index.html ! 
+env.Command('dummyTarget',index,scanForFurtherDocFiles) 
+
+# Doxygen will only run, if something changes, but we always want to set up 
+# install targets for all doc files, so that installed files will be updated. 
+# If dummyTarget is a build target, it will always be rebuild, since it is 
+# never generated. If it is not a Default build target, we might have to enforce 
+# building with AlwasBuild. 
+env.AlwaysBuild('dummyTarget') # For clean runs dummyTarget will not be build, so we have to clean up manually env.Clean('doc',['#/../doc/html',docTarget])
+env.Alias('doc',docTarget) 

@@ -1,0 +1,100 @@
+###
+# libccd
+# ---------------------------------
+# Copyright (c)2010 Daniel Fiser <danfis@danfis.cz>
+#
+#
+#  This file is part of libccd.
+#
+#  Distributed under the OSI-approved BSD License (the "License");
+#  see accompanying file BDS-LICENSE for details or see
+#  <http://www.opensource.org/licenses/bsd-license.php>.
+#
+#  This software is distributed WITHOUT ANY WARRANTY; without even the
+#  implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+#  See the License for more information.
+##
+
+CC ?= gcc
+M4 ?= m4
+PYTHON ?= python
+
+SYSTEM = $(shell uname)
+
+SYSTEM_CXXFLAGS =
+SYSTEM_LDFLAGS =
+
+ifeq '$(SYSTEM)' 'FreeBSD'
+  SYSTEM_CXXFLAGS = -Wno-long-long
+else
+endif
+
+NOWALL ?= no
+NOPEDANTIC ?= no
+DEBUG ?= no
+PROFIL ?= no
+
+ifeq '$(PROFIL)' 'yes'
+  DEBUG = yes
+endif
+
+ifeq '$(DEBUG)' 'yes'
+  CFLAGS = -g
+endif
+ifeq '$(PROFIL)' 'yes'
+  CFLAGS += -pg
+endif
+
+ifneq '$(NOWALL)' 'yes'
+  CFLAGS += -Wall
+endif
+ifneq '$(NOPEDANTIC)' 'yes'
+  CFLAGS += -pedantic
+endif
+
+CONFIG_FLAGS =
+USE_DOUBLE ?= yes
+USE_SINGLE ?= no
+
+ifeq '$(USE_SINGLE)' 'yes'
+  CONFIG_FLAGS += -DUSE_SINGLE
+  USE_DOUBLE = no
+endif
+ifeq '$(USE_DOUBLE)' 'yes'
+  CONFIG_FLAGS += -DUSE_DOUBLE
+endif
+
+CFLAGS += --std=gnu99
+LDFLAGS += $(SYSTEM_LDFLAGS)
+
+CHECKTARGETS = 
+check-dep: $(CHECKTARGETS)
+
+PREFIX     ?= /usr/local
+INCLUDEDIR ?= include
+LIBDIR     ?= lib
+
+showvars:
+	@echo "SYSTEM = "$(SYSTEM)
+	@echo ""
+	@echo "CC      = $(CC)"
+	@echo "M4      = $(M4)"
+	@echo ""
+	@echo "DEBUG      = $(DEBUG)"
+	@echo "PROFIL     = $(PROFIL)"
+	@echo "NOWALL     = $(NOWALL)"
+	@echo "NOPEDANTIC = $(NOPEDANTIC)"
+	@echo "USE_SINGLE = $(USE_SINGLE)"
+	@echo "USE_DOUBLE = $(USE_DOUBLE)"
+	@echo ""
+	@echo "CFLAGS       = $(CFLAGS)"
+	@echo "LDFLAGS      = $(LDFLAGS)"
+	@echo "CONFIG_FLAGS = $(CONFIG_FLAGS)"
+	@echo ""
+	@echo "PREFIX     = $(PREFIX)"
+	@echo "INCLUDEDIR = $(INCLUDEDIR)"
+	@echo "LIBDIR     = $(LIBDIR)"
+	@echo ""
+
+.DEFAULT_GOAL := all
+.PHONY: showvars 

@@ -1,0 +1,39 @@
+ptCreate1 :: ------
+ptCreate1 :: e[0]->dist: 0.200000
+ptCreate1 ::      ->witness: [0.200000 -0.400000 0.000000]
+ptCreate1 :: e[1]->dist: 0.500000
+ptCreate1 ::      ->witness: [0.500000 0.000000 0.500000]
+ptCreate1 :: e[2]->dist: 0.666667
+ptCreate1 ::      ->witness: [-0.333333 -0.333333 0.666667]
+ptCreate1 :: f->dist: 0.166667
+ptCreate1 ::      ->witness: [0.166667 -0.333333 0.166667]
+ptCreate2 :: ------
+ptCreate2 :: v[0]->dist: 2.000000
+ptCreate2 ::      ->witness: [-1.000000 -1.000000 0.000000]
+ptCreate2 :: v[1]->dist: 1.000000
+ptCreate2 ::      ->witness: [1.000000 0.000000 0.000000]
+ptCreate2 :: v[2]->dist: 1.000000
+ptCreate2 ::      ->witness: [0.000000 0.000000 1.000000]
+ptCreate2 :: v[3]->dist: 1.000000
+ptCreate2 ::      ->witness: [0.000000 1.000000 0.000000]
+ptCreate2 :: e[0]->dist: 0.200000
+ptCreate2 ::      ->witness: [0.200000 -0.400000 0.000000]
+ptCreate2 :: e[1]->dist: 0.500000
+ptCreate2 ::      ->witness: [0.500000 0.000000 0.500000]
+ptCreate2 :: e[2]->dist: 0.666667
+ptCreate2 ::      ->witness: [-0.333333 -0.333333 0.666667]
+ptCreate2 :: e[3]->dist: 0.200000
+ptCreate2 ::      ->witness: [-0.400000 0.200000 0.000000]
+ptCreate2 :: e[4]->dist: 0.500000
+ptCreate2 ::      ->witness: [0.500000 0.500000 0.000000]
+ptCreate2 :: e[5]->dist: 0.500000
+ptCreate2 ::      ->witness: [0.000000 0.500000 0.500000]
+ptCreate2 :: f[0]->dist: 0.166667
+ptCreate2 ::      ->witness: [0.166667 -0.333333 0.166667]
+ptCreate2 :: f[1]->dist: 0.000000
+ptCreate2 ::      ->witness: [0.000000 0.000000 0.000000]
+ptCreate2 :: f[2]->dist: 0.333333
+ptCreate2 ::      ->witness: [0.333333 0.333333 0.333333]
+ptCreate2 :: f[3]->dist: 0.166667
+ptCreate2 ::      ->witness: [-0.333333 0.166667 0.166667]
+ptNearest :: ------

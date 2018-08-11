@@ -1,0 +1,14 @@
+Makefile.in
+autom4te.cache/*
+aclocal.m4
+config.guess
+config.sub
+configure
+depcomp
+install-sh
+ltmain.sh
+missing
+*~
+src/gjk/config.h.in
+build/*
+ccd.pc

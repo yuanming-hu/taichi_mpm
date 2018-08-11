@@ -1,0 +1,12 @@
+__pycache__
+paper/paper.out
+*.synctex.gz
+*.out
+*.aux
+*.log
+*.blg
+paper.pdf
+tech.pdf
+*.bbl
+.DS_Store
+

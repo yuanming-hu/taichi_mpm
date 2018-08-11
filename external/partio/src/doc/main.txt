@@ -1,0 +1,29 @@
+/*! \mainpage Partio
+ * 
+ * Partio is a library for reading/writing/processing particle files.
+ * The layout of the API is as follows. There is also a Python API
+ * which you can get documentation for if you have installed partio
+ * by typing "pydoc partio" or viewing the tutorial or demo apps.
+ * 
+ * \section demos Simple Tutorial
+ *  - \subpage pytut -  Simple Python Tutorial
+ *  - \subpage cpptut -  Simple C++ Tutorial
+ * \section mainapi Main API pages
+ *  - Partio - Namespace containing all code
+ *  - Partio::read() - Read particle set from disk
+ *  - Partio::write() - Write particle set to disk
+ *  - Partio::readCached() - Read shared read-only version of particle set from disk
+ *  - Partio::ParticlesData - Access particle data in read only way
+ *  - Partio::ParticlesDataMutable - Access particle data in read/write way
+ *  - Partio::ParticleAttribute - Particle attribute handle, avoids string
+ lookups when reading data
+ *  - Partio::ParticleIterator - Optimized read iterator
+ * 
+ * \section Other
+ *  - \subpage license
+ */
+
+/**
+\page license License
+\htmlinclude license.txt
+*/

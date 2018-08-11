@@ -1,0 +1,7 @@
+#!/bin/sh
+
+libtoolize -f -c
+aclocal
+autoheader -f
+autoconf
+automake -a --foreign -f -c
