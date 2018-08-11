@@ -1,8 +1,4 @@
-# MPM APIs
-
-Useful meshes:
-bunny_small.obj
-flat_cutter_medium_res.obj
+# Taichi MPM
  
 ## MPM.initialize
 You only need to specify `res` for most cases.
