@@ -4,10 +4,9 @@
 (TODO)
 
 ## MPM.initialize
-You only need to specify `res` for most cases.
-
-Extra parameters:
- - res: (`Vector<dim, int>`) grid resolution
+(You only need to specify `res` in most cases. The default parameters generally work well.) 
+All parameters:
+ - res: (`Vector<dim, int>`) grid resolution. The length of this vector also specifies the dimensionality of the simulation.
  - base_delta_t : (`real`, default: `1e-4`) delta t
  - delta_x: (`real`, default: `1.0 / res[0]`)
  - particle_collision (`bool`, default: `False`): push particles inside level sets out (turn off when you are using sticky level sets)
@@ -17,7 +16,7 @@ Extra parameters:
  - num_threads: (`int`, default: `-1`) Number of threads to use. `-1` means maximum threads.
  - num_frames: (`int`, default: `1000`) Number of frames to simulate.
  - penalty: (`real`, default: `0`) Penetration penalty. Typical values are `1e3` ~ `1e4`.
- - optimized: (`bool`, default: `True`) Turn on optimization or not. Try turning it off if you find strange behaviour.
+ - optimized: (`bool`, default: `True`) Turn on optimization or not. Turning it off if you need to benchmark the less optimized transfers.
  - task_id: (`string`, default: `taichi` will use the current file name)
  - rigid_body_levelset_collision: (`bool`, default: `False`) Collide rigid body with level set? (Useful for wine & glass.)
  - rpic_damping: (`real`, default: `0`) RPIC damping value should be between 0 and 1 (inclusive).
@@ -102,34 +101,6 @@ Extra parameters:
  - Slip: -2
  - Slip with friction: `-2.4` means coeff of friction `0.4` with slip
  
-# Testing
-Use in `cpp` files only. Make sure you do "#include <taichi/testing.h>".
-```
-TC_TEST("SVD") {
-  using Matrix = MatrixND<dim, T>;
-  T tolerance = std::is_same<T, float32>() ? 3e-5f : 1e-12;
-  for (int i = 0; i < 100; i++) {
-    Matrix m = Matrix::rand();
-    Matrix U, sig, V, Q, R, S;
-
-    svd(m, U, sig, V);
-    TC_CHECK_EQUAL(m, U * sig * transposed(V), tolerance);
-
-    if (dim == 2) {
-      qr_decomp(m, Q, R);
-      TC_CHECK_EQUAL(m, Q * R, tolerance);
-      TC_CHECK_EQUAL(Q * transposed(Q), Matrix(1), tolerance);
-      CHECK(abs(R[0][1]) < 1e-6_f);
-      CHECK(R[0][0] > -1e-6_f);
-      CHECK(R[1][1] > -1e-6_f);
-    }
-
-    polar_decomp(m, R, S);
-    TC_CHECK_EQUAL(m, R * S, tolerance);
-  }
-}
-```
-
 # Articulation
 
 Syntax:
@@ -176,3 +147,20 @@ Syntax:
  - Remember to also set `delta_t=frame_dt` in `add_particles`, which enables the frequency of sampling to be consistent with its initial velocity
  - There might be some artifact due to the effect of gravity. You can reduce that artifact by  increasing `update_frequency`.
  - Example: `source_sampling.py`, `source_sampling_2d.py`
+
+# Performance
+
+# Bibtex
+Please cite our [paper](http://taichi.graphics/wp-content/uploads/2018/05/mls-mpm-cpic.pdf) if you use this code for your research: 
+```
+@article{hu2018mlsmpmcpic,
+  title={A Moving Least Squares Material Point Method with Displacement Discontinuity and Two-Way Rigid Body Coupling},
+  author={Hu, Yuanming and Fang, Yu and Ge, Ziheng and Qu, Ziyin and Zhu, Yixin and Pradhana, Andre and Jiang, Chenfanfu},
+  journal={ACM Transactions on Graphics (TOG)},
+  volume={37},
+  number={4},
+  pages={150},
+  year={2018},
+  publisher={ACM}
+}
+```
