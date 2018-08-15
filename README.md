@@ -1,5 +1,6 @@
-# Taichi MPM
+# High-performance Moving Least Squares MPM with CPIC 
 
+#### [[Paper](http://taichi.graphics/wp-content/uploads/2018/05/mls-mpm-cpic.pdf)] [[Introduction Video](https://www.youtube.com/watch?v=8iyvhGF9f7o)] [[SIGGRAPH 2018 Fast Forward](https://youtu.be/9RlNEgwTtPI)] 
 ## Installation
 (TODO)
 
