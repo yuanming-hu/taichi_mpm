@@ -1,8 +1,13 @@
 # High-performance Moving Least Squares MPM with CPIC 
 
 #### [[Paper](http://taichi.graphics/wp-content/uploads/2018/05/mls-mpm-cpic.pdf)] [[Introduction Video](https://www.youtube.com/watch?v=8iyvhGF9f7o)] [[SIGGRAPH 2018 Fast Forward](https://youtu.be/9RlNEgwTtPI)] 
+
 ## Installation
-(TODO)
+#### Linux
+Install [taichi](https://github.com/yuanming-hu/taichi) and put this in `projects/`.
+`ti build` will build it automatically.
+#### Windows and OSX
+Support coming in Sepetember.
 
 ## MPM.initialize
 (You only need to specify `res` in most cases. The default parameters generally work well.) 
