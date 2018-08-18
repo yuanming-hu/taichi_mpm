@@ -253,6 +253,7 @@ Syntax:
  - Example: `source_sampling.py`, `source_sampling_2d.py`
 
 ## Mathematical Comparisons with Traditional MPM
+(Assuming Quadratic B-Spline)
 <img src="/data/images/comparison.jpg" with="1000">
 
 # Performance
