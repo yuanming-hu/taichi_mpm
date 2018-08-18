@@ -1,8 +1,8 @@
 ##  High-performance MPM Solver with Cutting/Coupling Support for Taichi
-#### A Moving Least Squares Material Point Method with Displacement Discontinuity and Two-Way Rigid Body Coupling, ACM Transactions on Graphics (SIGGRAPH 2018)
-[Yuanming Hu](http://taichi.graphics/me/)<sup>1</sup>, [Yu Fang](https://github.com/hehaodele)<sup>2</sup>, Ziheng Ge<sup>3</sup>, [Ziyin Qu](https://sites.google.com/site/zjuwby/)<sup>5</sup>, [Yixin Zhu](https://www.yzhu.io/)<sup>4</sup>, [Andre Pradhana](https://www.seas.upenn.edu/~apradh/menu/about.html)<sup>5</sup>, [Chenfanfu Jiang](https://www.seas.upenn.edu/~cffjiang/)<sup>5</sup>
 
-<sup>1</sup>MIT CSAIL <sup>2</sup>Tsinghua University <sup>3</sup>University of Science and Technology of China <sup>4</sup>UCLA <sup>5</sup>University of Pennsylvania
+For the reproducibility of and further development on **A Moving Least Squares Material Point Method with Displacement Discontinuity and Two-Way Rigid Body Coupling**, ACM Transactions on Graphics (SIGGRAPH 2018)
+
+By [Yuanming Hu (MIT CSAIL)](http://taichi.graphics/me/)<sup>1</sup>, [Yu Fang (Tsinghua University)](http://squarefk.com/), Ziheng Ge (University of Science and Technology of China), Ziyin Qu (University of Pennsylvania), [Yixin Zhu (UCLA)](https://www.yzhu.io/)<sup>4</sup>, [Andre Pradhana (University of Pennsylvania)](https://www.seas.upenn.edu/~apradh/menu/about.html), [Chenfanfu Jiang (University of Pennsylvania)](https://www.seas.upenn.edu/~cffjiang/)
 
 #### [[Introduction & Demo Video](https://www.youtube.com/watch?v=8iyvhGF9f7o)] [[Paper](http://taichi.graphics/wp-content/uploads/2018/05/mls-mpm-cpic.pdf)] [[Supplemental Document](http://taichi.graphics/wp-content/uploads/2018/04/mls-mpm-cpic-supp.pdf)] [[88-Line MLS-MPM](https://github.com/yuanming-hu/taichi_mpm/blob/master/mls-mpm88.cpp)]
 #### [[SIGGRAPH 2018 Fast Forward](https://youtu.be/9RlNEgwTtPI)] [[PDF Slides](https://github.com/yuanming-hu/taichi_mpm/releases/download/SIGGRAPH2018/mls-mpm-cpic-slides.pdf)] [[PDF Slides with Notes](https://github.com/yuanming-hu/taichi_mpm/releases/download/SIGGRAPH2018/mls-mpm-cpic-slides-with-notes.pdf)]
