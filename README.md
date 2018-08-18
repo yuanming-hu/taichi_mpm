@@ -1,4 +1,4 @@
-##  High-performance MPM Solver with Cutting/Coupling for Taichi
+#  High-Performance MPM Solver with Cutting/Coupling
 
 For the reproducibility of and further development on **A Moving Least Squares Material Point Method with Displacement Discontinuity and Two-Way Rigid Body Coupling**, ACM Transactions on Graphics (SIGGRAPH 2018)
 
