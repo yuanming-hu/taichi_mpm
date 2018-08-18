@@ -18,7 +18,7 @@ Support coming in Sepetember.
 [Download](https://github.com/yuanming-hu/taichi_mpm/releases/download/SIGGRAPH2018/mls-mpm88.zip)
 ``` C++
 // 88-Line Moving Least Squares Material Point Method (MLS-MPM)  [with comments]
-// To compile:    g++ mls-mpm88.cpp -std=c++14 -g -lX11 -lpthread -O2 -o mls-mpm
+// To compile:    g++ mls-mpm88.cpp -std=c++14 -g -lX11 -lpthread -O3 -o mls-mpm
 #include "taichi.h"                 // Single header version of (part of) taichi
 using namespace taichi;
 const int n = 64 /*grid resolution (cells)*/, window_size = 800;
@@ -45,12 +45,12 @@ void advance(real dt) {
     real J = determinant(p.F);         //                         Current volume
     Mat r, s; polar_decomp(p.F, r, s); //Polor decomp. for fixed corotated model
     auto stress =                           // Cauchy stress times dt and inv_dx
-         -inv_dx*dt*vol*(2*mu * (p.F-r) * transposed(p.F) + lambda * (J-1) * J);
+        -4*inv_dx*inv_dx*dt*vol*(2*mu*(p.F-r) * transposed(p.F)+lambda*(J-1)*J);
     for (int i = 0; i < 3; i++) for (int j = 0; j < 3; j++) { // Scatter to grid
-        auto dpos = Vec(i, j) - fx;
-        Vector3 contrib(p.v * particle_mass, particle_mass);
+        auto dpos = (Vec(i, j) - fx) * dx;
+        Vector3 mv(p.v * particle_mass, particle_mass); //translational momentum
         grid[base_coord.x + i][base_coord.y + j] +=
-          w[i].x*w[j].y*(contrib+Vector3(4.0_f*(stress+p.C*particle_mass)*dpos));
+             w[i].x*w[j].y * (mv + Vector3((stress+particle_mass*p.C)*dpos, 0));
       }
   }
   for(int i = 0; i <= n; i++) for(int j = 0; j <= n; j++) { //For all grid nodes
@@ -63,21 +63,21 @@ void advance(real dt) {
         if (y < boundary) g[1] = std::max(0.0_f, g[1]);             //"Separate"
       }
     }
-  for (auto &p : particles) { // Grid to particle
+  for (auto &p : particles) {                                // Grid to particle
     Vector2i base_coord = (p.x * inv_dx - Vec(0.5_f)).cast<int>();
     Vec fx = p.x * inv_dx - base_coord.cast<real>();
     Vec w[3]{Vec(0.5) * sqr(Vec(1.5) - fx), Vec(0.75) - sqr(fx - Vec(1.0)),
              Vec(0.5) * sqr(fx - Vec(0.5))};
     p.C = Mat(0); p.v = Vec(0);
     for (int i = 0; i < 3; i++) for (int j = 0; j < 3; j++) {
-        auto dpos = Vec(i, j) - fx,
+        auto dpos = (Vec(i, j) - fx),
             grid_v = Vec(grid[base_coord.x + i][base_coord.y + j]);
         auto weight = w[i].x * w[j].y;
         p.v += weight * grid_v;                                      // Velocity
-        p.C += Mat::outer_product(weight * grid_v, dpos);              // APIC C
+        p.C += 4 * inv_dx * Mat::outer_product(weight * grid_v, dpos); // APIC C
       }
     p.x += dt * p.v;                                                // Advection
-    auto F = (Mat(1) + (4 * inv_dx * dt) * p.C) * p.F;       // MLS-MPM F-update
+    auto F = (Mat(1) + dt * p.C) * p.F;                      // MLS-MPM F-update
     Mat svd_u, sig, svd_v; svd(F, svd_u, sig, svd_v);
     for (int i = 0; i < 2; i++)                               // Snow Plasticity
       sig[i][i] = clamp(sig[i][i], 1.0_f - 2.5e-2_f, 1.0_f + 7.5e-3_f);
@@ -89,17 +89,17 @@ void advance(real dt) {
 
 void add_object(Vec center) {                                  // Seed particles
   for (int i = 0; i < 1000; i++) // Randomly sample 1000 particles in the square
-    particles.push_back(Particle((Vec::rand()*2.0_f-Vec(1))*0.08_f+center));
+    particles.push_back(Particle((Vec::rand()*2.0_f-Vec(1)) * 0.08_f + center));
 }
 int main() {
   GUI gui("Taichi Demo: Real-time MLS-MPM 2D ", window_size, window_size);
-  add_object(Vec(0.5,0.4));add_object(Vec(0.45,0.6));add_object(Vec(0.55,0.8));
+  add_object(Vec(0.5,0.4)); add_object(Vec(0.45,0.6));add_object(Vec(0.55,0.8));
   for (int i = 0;; i++) {                              //              Main Loop
     advance(dt);                                       //     Advance simulation
     if (i % int(frame_dt / dt) == 0) {                 //           Redraw frame
       gui.get_canvas().clear(Vector4(0.2, 0.4, 0.7, 1.0_f)); // Clear background
       for (auto p : particles)                                 // Draw particles
-        gui.buffer[(p.x * (inv_dx*window_size/n)).cast<int>()] = Vector4(0.8);
+        gui.buffer[(p.x * (inv_dx * window_size/n)).cast<int>()] = Vector4(0.8);
       gui.update();                                              // Update image
     }//Reference: A Moving Least Squares Material Point Method with Displacement
   } //             Discontinuity and Two-Way Rigid Body Coupling (SIGGRAPH 2018)
