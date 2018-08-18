@@ -1,6 +1,7 @@
 # High-performance Moving Least Squares MPM with CPIC 
 
-#### [[Paper](http://taichi.graphics/wp-content/uploads/2018/05/mls-mpm-cpic.pdf)] [[Introduction Video](https://www.youtube.com/watch?v=8iyvhGF9f7o)] [[SIGGRAPH 2018 Fast Forward](https://youtu.be/9RlNEgwTtPI)] 
+#### [[Paper](http://taichi.graphics/wp-content/uploads/2018/05/mls-mpm-cpic.pdf)] [[Introduction Video](https://www.youtube.com/watch?v=8iyvhGF9f7o)]
+#### [[SIGGRAPH 2018 Fast Forward](https://youtu.be/9RlNEgwTtPI)] [[PDF Slides](https://github.com/yuanming-hu/taichi_mpm/releases/download/SIGGRAPH2018/mls-mpm-cpic-slides.pdf)][[PDF Slides with Notes](https://github.com/yuanming-hu/taichi_mpm/releases/download/SIGGRAPH2018/mls-mpm-cpic-slides-with-notes.pdf)]
 
 ## Installation
 ### Linux
@@ -10,7 +11,7 @@ Install [taichi](https://github.com/yuanming-hu/taichi) and put this in `project
 Support coming in Sepetember.
 
 ## 88-Line Version
-[Download](https://github.com/yuanming-hu/taichi_mpm/releases/download/88/mls-mpm88.zip)
+[Download](https://github.com/yuanming-hu/taichi_mpm/releases/download/SIGGRAPH2018/mls-mpm88.zip)
 ``` C++
 // The Moving Least Squares Material Point Method in 88 LoC (with comments)
 // To compile: g++ mls-mpm.cpp -std=c++14 -g -lX11 -lpthread -O2 -o mpm
@@ -246,6 +247,9 @@ Syntax:
  - Remember to also set `delta_t=frame_dt` in `add_particles`, which enables the frequency of sampling to be consistent with its initial velocity
  - There might be some artifact due to the effect of gravity. You can reduce that artifact by  increasing `update_frequency`.
  - Example: `source_sampling.py`, `source_sampling_2d.py`
+
+## Mathematical Comparisons with Traditional MPM
+<img src="/data/images/comparison.jpg" with="1000">
 
 # Performance
 
