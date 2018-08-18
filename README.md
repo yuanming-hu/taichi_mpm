@@ -9,8 +9,12 @@ By [Yuanming Hu (MIT CSAIL)](http://taichi.graphics/me/)<sup>1</sup>, [Yu Fang (
 
 ## Installation
 ### Linux
-Install [taichi](https://github.com/yuanming-hu/taichi) and put this in `projects/`.
-`ti build` will build it automatically.
+Install [`taichi`](https://taichi.readthedocs.io/en/latest/installation.html).
+Then, in command line
+```
+ti install mpm
+```
+and it will install this taichi package automatically.
 ### Windows and OSX
 Support coming in Sepetember.
 
