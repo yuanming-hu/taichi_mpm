@@ -13,9 +13,9 @@ Support coming in Sepetember.
 ## 88-Line Version
 [Download](https://github.com/yuanming-hu/taichi_mpm/releases/download/SIGGRAPH2018/mls-mpm88.zip)
 ``` C++
-// The Moving Least Squares Material Point Method in 88 LoC (with comments)
-// To compile: g++ mls-mpm88.cpp -std=c++14 -g -lX11 -lpthread -O2 -o mls-mpm
-#include "taichi.h"       // Single header version of (part of) taichi
+// 88-Line Moving Least Squares Material Point Method (MLS-MPM)  [with comments]
+// To compile:    g++ mls-mpm88.cpp -std=c++14 -g -lX11 -lpthread -O2 -o mls-mpm
+#include "taichi.h"                 // Single header version of (part of) taichi
 using namespace taichi;
 const int n = 64 /*grid resolution (cells)*/, window_size = 800;
 const real dt = 1e-4_f, frame_dt = 1e-3_f, dx = 1.0_f / n, inv_dx = 1.0_f / dx;
@@ -27,7 +27,7 @@ using Vec = Vector2; using Mat = Matrix2;
 struct Particle { Vec x, v; Mat F, C; real Jp;
   Particle(Vec x, Vec v=Vec(0)) : x(x), v(v), F(1), C(0), Jp(1) {} };
 std::vector<Particle> particles;
-Vector3 grid[n + 1][n + 1];  // velocity + mass, node res = cell res + 1
+Vector3 grid[n + 1][n + 1];          // velocity + mass, node res = cell res + 1
 
 void advance(real dt) {
   std::memset(grid, 0, sizeof(grid));                              // Reset grid
@@ -41,7 +41,7 @@ void advance(real dt) {
     real J = determinant(p.F);         //                         Current volume
     Mat r, s; polar_decomp(p.F, r, s); //Polor decomp. for fixed corotated model
     auto stress =                           // Cauchy stress times dt and inv_dx
-        -inv_dx*dt*vol*(2*mu * (p.F-r) * transposed(p.F) + lambda * (J-1) * J);
+         -inv_dx*dt*vol*(2*mu * (p.F-r) * transposed(p.F) + lambda * (J-1) * J);
     for (int i = 0; i < 3; i++) for (int j = 0; j < 3; j++) { // Scatter to grid
         auto dpos = Vec(i, j) - fx;
         Vector3 contrib(p.v * particle_mass, particle_mass);
@@ -94,9 +94,9 @@ int main() {
     advance(dt);                                       //     Advance simulation
     if (i % int(frame_dt / dt) == 0) {                 //           Redraw frame
       gui.get_canvas().clear(Vector4(0.2, 0.4, 0.7, 1.0_f)); // Clear background
-      for (auto p : particles)                         // Draw particles
+      for (auto p : particles)                                 // Draw particles
         gui.buffer[(p.x * (inv_dx*window_size/n)).cast<int>()] = Vector4(0.8);
-      gui.update();                                    // Update image
+      gui.update();                                              // Update image
     }//Reference: A Moving Least Squares Material Point Method with Displacement
   } //             Discontinuity and Two-Way Rigid Body Coupling (SIGGRAPH 2018)
 }  //  By Yuanming Hu (who also wrote this 88-line version), Yu Fang, Ziheng Ge,
