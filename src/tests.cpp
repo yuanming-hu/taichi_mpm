@@ -1,3 +1,8 @@
+/*******************************************************************************
+    Copyright (c) The Taichi MPM Authors (2018- ). All Rights Reserved.
+    The use of this software is governed by the LICENSE file.
+*******************************************************************************/
+
 #include <taichi/common/testing.h>
 
 #include "mpm_fwd.h"

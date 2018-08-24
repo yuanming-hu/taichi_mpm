@@ -1,3 +1,8 @@
+/*******************************************************************************
+    Copyright (c) The Taichi MPM Authors (2018- ). All Rights Reserved.
+    The use of this software is governed by the LICENSE file.
+*******************************************************************************/
+
 #ifdef TC_USE_MPI
 #include <mpi.h>
 #endif

@@ -1,3 +1,8 @@
+/*******************************************************************************
+    Copyright (c) The Taichi MPM Authors (2018- ). All Rights Reserved.
+    The use of this software is governed by the LICENSE file.
+*******************************************************************************/
+
 #pragma once
 
 #include "mpm.h"
