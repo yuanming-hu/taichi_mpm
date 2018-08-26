@@ -30,9 +30,6 @@
 
 TC_NAMESPACE_BEGIN
 
-// Supports FLIP?
-//#define TC_MPM_WITH_FLIP
-
 template <int dim, int ORDER>
 struct MPMKernel;
 
@@ -70,7 +67,6 @@ class MPM : public Simulation<dim> {
   using Kernel = std::conditional_t<dim == 2,
                                     MPMKernel<dim, mpm_kernel_order>,
                                     MPMFastKernel32>;
-  // using Kernel = MPMKernel<dim, mpm_kernel_order>;
   using Index = IndexND<dim>;
   using Region = RegionND<dim>;
   using Particle = MPMParticle<dim>;
@@ -86,12 +82,6 @@ class MPM : public Simulation<dim> {
   std::unique_ptr<PageMap> rigid_page_map;
   std::unique_ptr<PageMap> fat_page_map;
   std::unique_ptr<SparseGrid> grid;
-#ifdef TC_MPM_WITH_FLIP
-  ArrayND<dim, Vector> grid_velocity_backup;
-#endif
-
-  // Removed for restart
-  // std::shared_ptr<Pakua> pakua;
 
   /***************************************************************
    * Serialized
@@ -108,7 +98,6 @@ class MPM : public Simulation<dim> {
   real base_delta_t;
   real cfl;
   real request_t = 0.0f;
-  real flip_ratio;
   real pushing_force;
   real rpic_damping;
   real apic_damping;
@@ -155,7 +144,6 @@ class MPM : public Simulation<dim> {
     TC_IO(base_delta_t);
     TC_IO(cfl);
     TC_IO(request_t);
-    TC_IO(flip_ratio);
     TC_IO(pushing_force);
     TC_IO(rpic_damping);
     TC_IO(apic_damping);
@@ -185,12 +173,6 @@ class MPM : public Simulation<dim> {
   void resample();
 
   void resample_optimized();
-
-  void grid_backup_velocity() {
-#ifdef TC_MPM_WITH_FLIP
-    grid_velocity_backup = grid_velocity;
-#endif
-  }
 
   void rasterize(real delta_t, bool with_force = true);
 

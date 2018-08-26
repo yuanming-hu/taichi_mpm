@@ -44,11 +44,7 @@ void MPM<dim>::initialize(const Config &config) {
   base_delta_t *= config.get("dt-multiplier", 1.0_f);
   reorder_interval = config.get<int>("reorder_interval", 1000);
   cfl = config.get("cfl", 1.0f);
-  flip_ratio = config.get("flip_ratio", 0.0f);
   particle_gravity = config.get<bool>("particle_gravity", true);
-  if (flip_ratio != 0) {
-    // assert_info(apic == false, "Set apic = false when flip_ratio is not 0.");
-  }
   TC_LOAD_CONFIG(affine_damping, 0.0f);
 
   spgrid_size = 4096;
@@ -81,11 +77,6 @@ void MPM<dim>::initialize(const Config &config) {
     TC_ASSERT(config.get("optimized", true) == false);
   }
 
-#if TC_MPM_WITH_FLIP
-  grid_velocity_backup = grid_velocity;
-  grid_velocity_backup.reset(Vector(0));
-#endif
-
   // Add a background rigid body
   rigids.emplace_back(std::make_unique<RigidBody<dim>>());
   rigids.back()->set_as_background();
@@ -115,7 +106,8 @@ std::string MPM<dim>::add_particles(const Config &config) {
       std::tie(p_i, p) = allocator.allocate_particle(type);
 
       Config config_new = config;
-      std::string param_string[3] = {"cohesion_tex", "theta_c_tex", "theta_s_tex"};
+      std::string param_string[3] = {"cohesion_tex", "theta_c_tex",
+                                     "theta_s_tex"};
       for (auto &p : param_string)
         if (config.has_key(p)) {
           std::shared_ptr<Texture> texture =
@@ -570,45 +562,31 @@ void MPM<dim>::substep() {
   if (has_rigid_body()) {
     TC_PROFILE("gather_cdf", gather_cdf());
   }
-  // TC_PROFILE("rasterize_water", rasterize_water());
-  if (flip_ratio > 0.0f) {
-    TC_NOT_IMPLEMENTED
-#if defined(TC_MPM_WITH_FLIP)
-    TC_PROFILE("rasterize", rasterize(delta_t, false));
-    TC_PROFILE("normalize_grid_and_apply_external_force",
-               normalize_grid_and_apply_external_force());
-    TC_PROFILE("grid_velocity_backup", grid_backup_velocity());
-    TC_PROFILE("rasterize", rasterize(delta_t, true));
-    TC_PROFILE("normalize_grid_and_apply_external_force",
-               normalize_grid_and_apply_external_force());
-#endif
-  } else {
-    if (!config_backup.get("benchmark_rasterize", false)) {
-      if (config_backup.get("optimized", true)) {
-        TC_PROFILE_TPE("P2G optimized", rasterize_optimized(delta_t),
-                       particles.size());
-      } else {
-        TC_PROFILE_TPE("P2G", rasterize(delta_t), particles.size());
-      }
+  if (!config_backup.get("benchmark_rasterize", false)) {
+    if (config_backup.get("optimized", true)) {
+      TC_PROFILE_TPE("P2G optimized", rasterize_optimized(delta_t),
+                     particles.size());
     } else {
-      while (true) {
-        Time::Timer _("Rasterize x 20");
-        base_delta_t = 0;
-        for (int i = 0; i < 20; i++) {
-          rasterize_optimized(delta_t);
-        }
+      TC_PROFILE_TPE("P2G", rasterize(delta_t), particles.size());
+    }
+  } else {
+    while (true) {
+      Time::Timer _("Rasterize x 20");
+      base_delta_t = 0;
+      for (int i = 0; i < 20; i++) {
+        rasterize_optimized(delta_t);
       }
     }
-
-    Vector gravity_velocity_increment = gravity * delta_t;
-    if (particle_gravity) {
-      // Add gravity to particles instead of grid
-      gravity_velocity_increment = Vector(0);
-    }
-    TC_PROFILE(
-        "normalize_grid_and_apply_external_force",
-        normalize_grid_and_apply_external_force(gravity_velocity_increment));
   }
+
+  Vector gravity_velocity_increment = gravity * delta_t;
+  if (particle_gravity) {
+    // Add gravity to particles instead of grid
+    gravity_velocity_increment = Vector(0);
+  }
+  TC_PROFILE(
+      "normalize_grid_and_apply_external_force",
+      normalize_grid_and_apply_external_force(gravity_velocity_increment));
 
   if (config_backup.get("rigid_body_levelset_collision", false)) {
     TC_PROFILE("rigid_body_levelset_collision",

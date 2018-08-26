@@ -582,17 +582,6 @@ static_assert(mpm_kernel_order == 2, "");
 
 template <int dim>
 void MPM<dim>::resample() {
-#ifdef TC_MPM_WITH_FLIP
-  // The "portion" of FLIP update
-  real alpha_delta_t = 1;
-  if (apic) {
-    // All APIC
-    alpha_delta_t = 0;
-  } else {
-    // Partly flip
-    alpha_delta_t = flip_ratio;
-  }
-#endif
   for (auto &r : rigids) {
     r->reset_tmp_velocity();
   }
@@ -619,9 +608,6 @@ void MPM<dim>::resample() {
       GridState<dim> &g = get_grid(i);
 
       auto grid_vel = grid_velocity(i);
-#if TC_MPM_WITH_FLIP
-      auto grid_vel_backup = grid_velocity_backup[i];
-#endif
       Vector dpos = pos - i.template cast<real>();
       VectorP dw_w = kernel.get_dw_w(ind.get_ipos());
 
@@ -651,14 +637,8 @@ void MPM<dim>::resample() {
                    p.boundary_normal * (delta_t * delta_x * pushing_force);
         }
         grid_vel = fake_v;
-#if TC_MPM_WITH_FLIP
-        grid_vel_backup = fake_v;
-#endif
       }
       v += dw_w[dim] * grid_vel;
-#if TC_MPM_WITH_FLIP
-      bv += dw_w[D] * grid_vel_backup;
-#endif
       b += Matrix::outer_product(dw_w[dim] * grid_vel, dpos);
       cdg += Matrix::outer_product(grid_vel, Vector(dw_w));
     }
@@ -671,21 +651,7 @@ void MPM<dim>::resample() {
     } else {
       p.apic_b = damp_affine_momemtum(b);
     }
-#ifdef TC_MPM_WITH_FLIP
-    Vector flip_v = (1 - alpha_delta_t) * v + alpha_delta_t * (v - bv + p.v);
-    Vector pic_v = v;
-
-    if (flip_ratio > 0) {
-      // FLIP
-      p.v = flip_v;
-      p.apic_b = Matrix(0.0f);
-    } else {
-      // APIC
-      p.v = pic_v;
-    }
-#else
     p.set_velocity(v);
-#endif
 
 #ifdef MLSMPM
     cdg = b * (-4 * inv_delta_x);
