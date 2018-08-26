@@ -1,4 +1,4 @@
-#  High-Performance MPM Solver with Cutting/Coupling
+#  High-Performance MLS-MPM Solver with Cutting and Coupling (CPIC)
 <img src="https://github.com/yuanming-hu/public_files/raw/master/graphics/mls-mpm-cpic/water_wheel.gif"> <img src="https://github.com/yuanming-hu/public_files/raw/master/graphics/mls-mpm-cpic/sand_paddles.gif">
 
 For the reproducibility of, and further development on **A Moving Least Squares Material Point Method with Displacement Discontinuity and Two-Way Rigid Body Coupling**, ACM Transactions on Graphics (SIGGRAPH 2018).
