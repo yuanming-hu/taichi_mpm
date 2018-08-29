@@ -16,7 +16,7 @@ By [Yuanming Hu (MIT CSAIL)](http://taichi.graphics/me/), [Yu Fang (Tsinghua Uni
 
 ## Installation
 ### Linux
-Install [`taichi`](https://taichi.readthedocs.io/en/latest/installation.html).
+Install [`taichi`](https://github.com/yuanming-hu/taichi) [[Instructions](https://taichi.readthedocs.io/en/latest/installation.html)].
 Then, in command line
 ```
 ti install mpm
