@@ -111,13 +111,8 @@ void Deactivate_Page(void* data, const size_t size)
 //#####################################################################
 void Check_Address_Resident(const void* addr)
 {
-    void* page_addr=reinterpret_cast<void*>(reinterpret_cast<uint64_t>(addr)&0xfffffffffffff000UL);
-    unsigned char status;
-    if(mincore(page_addr,4096,&status)==-1)
-        switch(errno){
-            case ENOMEM: FATAL_ERROR("In Check_Address_Resident() : Input address "+Value_To_String(addr)+" has not been mapped");
-            default: FATAL_ERROR(" In Check_Address_Resident() : mincore() failed with errno="+Value_To_String(errno));}
-    if(!status) FATAL_ERROR("In Check_Address_Resident() : Input address "+Value_To_String(addr)+" is not resident in physical memory");
+    printf("Not implemented\n");
+    exit(-1);
 }
 //#####################################################################
 // Function Validate_Memory_Use
@@ -125,26 +120,8 @@ void Check_Address_Resident(const void* addr)
 // WARNING: This validation function is very conservative. It can fail (without truly indicating a problem) when using transparent hugepages
 void Validate_Memory_Use(uint64_t number_of_pages,void *data_ptr,uint64_t *page_mask_array)
 {
-    if(number_of_pages%64) FATAL_ERROR("In Validate_Memory_Use(): Number of mapped pages must be divisible by 64");
-    for(uint64_t base_page=0;base_page<number_of_pages;base_page+=64){
-        unsigned char vec[64];
-        if(mincore(data_ptr,262144,vec)==-1)
-            switch(errno){
-                case ENOMEM: FATAL_ERROR("In Validate_Memory_Use() : Input address "+Value_To_String(data_ptr)+" has not been mapped");
-                default: FATAL_ERROR(" In Validate_Memory_Use() : mincore() failed with errno="+Value_To_String(errno));}
-        uint64_t page_bit=1UL;
-        for(int i=0;i<64;i++,page_bit<<=1){
-            bool mincore_set = vec[i];
-            bool page_mask_set = (*page_mask_array & page_bit);
-            if(mincore_set && !page_mask_set){
-                for(int qword=0;qword<512;qword++)
-                    if(*reinterpret_cast<uint64_t*>(reinterpret_cast<uint64_t>(data_ptr)+i*4096UL+qword*8UL))
-                        FATAL_ERROR("In Validate_Memory_Use(): Page "+Value_To_String(base_page+i)+" is resident (and nonzero) in physical memory, but not marked in SPGrid_Set");}
-            else if(!mincore_set && page_mask_set)
-                FATAL_ERROR("In Validate_Memory_Use(): Page "+Value_To_String(base_page+i)+" is not resident in physical memory, but marked in SPGrid_Set");}
-        data_ptr=reinterpret_cast<void*>(reinterpret_cast<uint64_t>(data_ptr)+262144UL);
-        page_mask_array++;
-    }
+  printf("Not implemented\n");
+  exit(-1);
 }
 //#####################################################################
 }

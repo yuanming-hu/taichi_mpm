@@ -72,7 +72,7 @@ class RigidBoundaryParticle : public MPMParticle<dim> {
     return untransformed_element.get_transformed(rigid->get_mesh_to_world());
   }
 
-  Vector3 get_debug_info() const {
+  Vector3 get_debug_info() const override {
     return Vector3((real)climb_rudder, 0, 0);
   }
 };

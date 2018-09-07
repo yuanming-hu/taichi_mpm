@@ -40,9 +40,12 @@ TC_FORCE_INLINE float32 extract_float32(const __m128 &s, int i) {
   return reinterpret_cast<float32 *>(&ret)[0];
 }
 
+/*
 TC_FORCE_INLINE __m128 broadcast(const __m128 &s, int i) {
   return _mm_shuffle_ps(s, s, 0x55 * i);
 }
+*/
+#define broadcast(s, i) _mm_shuffle_ps((s), (s), 0x55 * (i))
 
 template <typename MPM, bool v_and_m_only = false>
 struct GridCache {
@@ -91,12 +94,12 @@ struct GridCache {
       for (int j = 0; j < scratch_y_size; j++) {
         for (int k = 0; k < scratch_z_size; k++) {
           TC_STATIC_IF(v_and_m_only) {
-            blocked[i][j][k] =
+            id(blocked[i][j][k]) =
                 grid_array(to_std_array(block_base_coord + Vector3i(i, j, k)))
                     .velocity_and_mass;
           }
           TC_STATIC_ELSE {
-            blocked[i][j][k] =
+            id(blocked[i][j][k]) =
                 grid_array(to_std_array(block_base_coord + Vector3i(i, j, k)));
           }
           TC_STATIC_END_IF
@@ -115,11 +118,11 @@ struct GridCache {
       for (int j = 0; j < scratch_y_size; j++) {
         for (int k = 0; k < scratch_z_size; k++) {
           TC_STATIC_IF(v_and_m_only) {
-            grid_array(to_std_array(block_base_coord + Vector3i(i, j, k)))
-                .velocity_and_mass = blocked[i][j][k];
+            id(grid_array(to_std_array(block_base_coord + Vector3i(i, j, k)))
+                .velocity_and_mass) = blocked[i][j][k];
           }
           TC_STATIC_ELSE {
-            grid_array(to_std_array(block_base_coord + Vector3i(i, j, k))) =
+            id(grid_array(to_std_array(block_base_coord + Vector3i(i, j, k)))) =
                 blocked[i][j][k];
           }
           TC_STATIC_END_IF

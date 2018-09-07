@@ -205,7 +205,7 @@ std::string MPM<dim>::add_particles(const Config &config) {
         Vector scale = config.get("scale", Vector(1.0f));
         Vector translate = config.get("translate", Vector(0.0f));
         for (auto &coord : mesh->vertices) {
-          create_particle(coord * scale + translate, 8, config);
+          create_particle(id(coord) * id(scale) + translate, 8, config);
         }
       }
       TC_STATIC_ELSE{TC_NOT_IMPLEMENTED} TC_STATIC_END_IF
@@ -904,7 +904,7 @@ void MPM<dim>::sort_particles_and_populate_grid() {
       TC_STATIC_ELSE {
         auto x = 1 << SparseMask::block_xbits;
         auto y = 1 << SparseMask::block_ybits;
-        auto z = 1 << SparseMask::block_zbits;
+        auto z = 1 << id(SparseMask::block_zbits);
         auto c = SparseMask::LinearToCoord(base_offset);
         for (int i = -1 + (c[0] == 0); i < 2; i++) {
           for (int j = -1 + (c[1] == 0); j < 2; j++) {

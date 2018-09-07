@@ -186,7 +186,7 @@ class AxialRotationArticulation : public Articulation<dim> {
 
     TC_STATIC_IF(dim == 3) {
       auto input_axis = normalized(config.get<Vector3>("axis"));
-      axis = transform(inversed(this->obj[1]->get_centroid_to_world()),
+      axis = transform(id(inversed(this->obj[1]->get_centroid_to_world())),
                        input_axis, 0);
     }
     TC_STATIC_END_IF
@@ -197,7 +197,7 @@ class AxialRotationArticulation : public Articulation<dim> {
       config_.set("penalty", config.get("penalty", 1e3_f));
       TC_STATIC_IF(dim == 3) {
         auto input_axis = normalized(config.get<Vector3>("axis"));
-        Vector axial_offset = input_axis * config.get("axis_length", 0.1_f);
+        Vector axial_offset = id(input_axis) * config.get("axis_length", 0.1_f);
         if (i == 1) {
           axial_offset = -axial_offset;
         }
@@ -254,13 +254,13 @@ class MotorArticulation : public Articulation<dim> {
   void apply(real delta_t) const override {
     TorqueType torque;
     TC_STATIC_IF(dim == 2) {
-      torque = power * delta_t;
+      torque = id(power) * id(delta_t);
     }
     TC_STATIC_ELSE {
       Vector3 transformed_axis =
-          transform(this->obj[1]->get_centroid_to_world(),
+          transform(id(this->obj[1]->get_centroid_to_world()),
                     axial_rotation_articulation.axis, 0);
-      torque = transformed_axis * power * delta_t;
+      torque = id(transformed_axis) * power * delta_t;
     }
     TC_STATIC_END_IF
     obj[0]->apply_torque(torque);
@@ -315,14 +315,14 @@ class StepperArticulation : public Articulation<dim> {
         obj[0]->angular_velocity.value - obj[1]->angular_velocity.value;
     TC_STATIC_IF(dim == 2) {
       TC_NOT_IMPLEMENTED;
-      torque = (angular_velocity - current_vel) *
+      torque = (id(angular_velocity) - id(current_vel)) *
                (this->obj[0]->inertia + this->obj[1]->inertia);
     }
     TC_STATIC_ELSE {
-      Vector3 axis = normalized(transform(this->obj[1]->get_centroid_to_world(),
+      Vector3 axis = normalized(transform(id(this->obj[1]->get_centroid_to_world()),
                                           axial_rotation_articulation.axis, 0));
 
-      auto correction_vel_projected = angular_velocity - dot(current_vel, axis);
+      auto correction_vel_projected = angular_velocity - dot(id(current_vel), id(axis));
       torque = inversed(this->obj[0]->get_transformed_inversed_inertia() +
                         this->obj[1]->get_transformed_inversed_inertia()) *
                (axis * correction_vel_projected);

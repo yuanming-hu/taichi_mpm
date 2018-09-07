@@ -138,7 +138,7 @@ void MPM<dim>::write_rigid_body(RigidBody<dim> const *rigid,
     for (auto &elem : mesh->elements) {
       for (int i = 0; i < dim; i++) {
         Vector v = transform(trans, elem.v[i]);
-        fmt::print(f, "v {} {} {}\n", v.x, v.y, v.z);
+        fmt::print(f, "v {} {} {}\n", v[0], v[1], v[2]);
       }
     }
     int counter = 0;

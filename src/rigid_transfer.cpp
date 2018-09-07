@@ -77,28 +77,28 @@ void MPM<dim>::rasterize_rigid_boundary() {
       [&](GridState<dim> &g) { g.set_distance(g.get_distance() * delta_x); });
 
   TC_STATIC_IF(dim == 2) {
-    ArrayND<2, uint32> grid_states_tmp(this->res + Vectori(1), 0);
+    ArrayND<2, uint32> grid_states_tmp(id(this->res + Vectori(1)), 0);
     for (int e = 0; e < config_backup.get<int>("cdf_expand", 0); e++) {
       for (int k = 0; k < dim; k++) {
         Region region = Region(Vectori::axis(k), res - Vectori::axis(k));
         grid_states_tmp.reset_zero();
         for (auto &ind : region) {
-          grid_states_tmp[ind] = this->get_grid(ind.get_ipos()).states;
+          id(grid_states_tmp)[ind] = this->get_grid(ind.get_ipos()).states;
         }
         for (auto &ind : region) {
           auto update = [&](Vectori offset) {
             auto nei_state = this->get_grid(ind + offset).states;
-            auto state = grid_states_tmp[ind];
+            auto state = id(grid_states_tmp)[ind];
             auto states_to_add =
                 ((nei_state & ~state) & state_mask) & GridState<dim>::tag_mask;
-            grid_states_tmp[ind] =
+            id(grid_states_tmp)[ind] =
                 state | (nei_state & (states_to_add | (states_to_add >> 1)));
           };
           update(Vectori::axis(k));
           update(-Vectori::axis(k));
         }
         for (auto &ind : region) {
-          this->get_grid(ind.get_ipos()).states = grid_states_tmp[ind];
+          this->get_grid(ind.get_ipos()).states = id(grid_states_tmp)[ind];
         }
       }
       int count = 0;

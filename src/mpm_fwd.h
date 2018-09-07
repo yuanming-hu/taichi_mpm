@@ -112,10 +112,10 @@ struct GridState {
   }
 };
 
-static_assert(bit::is_power_of_two(sizeof(GridState<2>)),
+static_assert(bit::is_power_of_two((int)sizeof(GridState<2>)),
               "GridState<2> size must be POT");
 
-static_assert(bit::is_power_of_two(sizeof(GridState<3>)),
+static_assert(bit::is_power_of_two((int)sizeof(GridState<3>)),
               "GridState<3> size must be POT");
 
 template <int dim>

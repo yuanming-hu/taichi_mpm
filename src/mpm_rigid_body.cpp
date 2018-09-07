@@ -103,27 +103,27 @@ std::unique_ptr<RigidBody<dim>> MPM<dim>::create_rigid_body(Config config) {
   rigid.position = initial_position;
 
   TC_STATIC_IF(dim == 2) {
-    real angle = 0;
+    real angle = id(0);
     if (g) {
-      angle = (*g)(this->current_t);
+      angle = (*g)(id(this->current_t));
     } else {
       angle = config.get("initial_rotation", 0.0_f);
     }
-    rigid.rotation = Rotation<2>(radians(angle));
+    rigid.rotation = id(Rotation<2>(radians(angle)));
   }
   TC_STATIC_ELSE {
     Vector euler;
     if (rigid.rot_func) {
-      euler = rigid.rot_func(this->current_t);
+      euler = rigid.rot_func(id(this->current_t));
     } else {
-      euler = config.get("initial_rotation", Vector(0.0_f));
+      euler = config.get("initial_rotation", id(Vector(0.0_f)));
     }
-    euler = radians(euler);
+    euler = radians(id(euler));
     Eigen::Quaternion<real> q =
         Eigen::AngleAxis<real>(euler[0], Eigen::Matrix<real, 3, 1>::UnitX()) *
         Eigen::AngleAxis<real>(euler[1], Eigen::Matrix<real, 3, 1>::UnitY()) *
         Eigen::AngleAxis<real>(euler[2], Eigen::Matrix<real, 3, 1>::UnitZ());
-    rigid.rotation.value = q;
+    rigid.rotation.value = id(q);
   }
   TC_STATIC_END_IF
   if (dim == 3) {
