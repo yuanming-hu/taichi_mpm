@@ -17,7 +17,12 @@ include_directories(external/libccd/src)
 set(TAICHI_PROJECT_LIBRARIES ${TAICHI_PROJECT_LIBRARIES} ${TAICHI_PROJECT_NAME} PARENT_SCOPE)
 target_link_libraries(taichi_${TAICHI_PROJECT_NAME} ${CORE_LIBRARY_NAME})
 target_link_libraries(taichi_${TAICHI_PROJECT_NAME} ${CMAKE_CURRENT_LIST_DIR}/external/partio/lib/libpartio.a)
-target_link_libraries(taichi_${TAICHI_PROJECT_NAME} ${CMAKE_CURRENT_LIST_DIR}/external/lib/libSPGrid.so)
+
+find_package(ZLIB)
+if (ZLIB_FOUND)
+    target_link_libraries(taichi_${TAICHI_PROJECT_NAME} z)
+endif(ZLIB_FOUND)
+
 target_link_libraries(taichi_${TAICHI_PROJECT_NAME} ccd)
 
 add_subdirectory(external/libccd)

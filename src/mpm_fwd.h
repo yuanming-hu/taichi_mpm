@@ -8,7 +8,6 @@
 #include <taichi/util.h>
 #include <SPGrid/Core/SPGrid_Allocator.h>
 #include <SPGrid/Core/SPGrid_Page_Map.h>
-#include <SPGrid/Tools/SPGrid_Clear.h>
 #include <taichi/system/threading.h>
 #include <taichi/common/bit.h>
 
