@@ -1,14 +1,14 @@
 // 88-Line Moving Least Squares Material Point Method (MLS-MPM)  [with comments]
 // To compile:    g++ mls-mpm88.cpp -std=c++14 -g -lX11 -lpthread -O3 -o mls-mpm
-#include "taichi.h"                 // Single header version of (part of) taichi
-using namespace taichi;
-const int n = 64 /*grid resolution (cells)*/, window_size = 800;
+#include "taichi.h"      // NOTE: Make sure to download the whole mls-mpm88.zip,
+using namespace taichi;  //       which includes mls-mpm88.cpp and **taichi.h**.
+const int n = 64 /*grid resolution (cells)*/, window_size = 800;  // Version 1.0
 const real dt = 1e-4_f, frame_dt = 1e-3_f, dx = 1.0_f / n, inv_dx = 1.0_f / dx;
 auto particle_mass = 1.0_f, vol = 1.0_f;
-auto hardening = 10.0_f, E = 1e4_f, nu = 0.2_f;
+auto hardening = 10.0_f, E = 1e4_f, nu = 0.2_f; 
 real mu_0 = E / (2 * (1 + nu)), lambda_0 = E * nu / ((1+nu) * (1 - 2 * nu));
 using Vec = Vector2; using Mat = Matrix2;
-
+bool plastic = true;                  // set to false for purely elastic objects
 struct Particle { Vec x, v; Mat F, C; real Jp;
   Particle(Vec x, Vec v=Vec(0)) : x(x), v(v), F(1), C(0), Jp(1) {} };
 std::vector<Particle> particles;
@@ -17,7 +17,7 @@ Vector3 grid[n + 1][n + 1];          // velocity + mass, node res = cell res + 1
 void advance(real dt) {
   std::memset(grid, 0, sizeof(grid));                              // Reset grid
   for (auto &p : particles) {                                             // P2G
-    Vector2i base_coord = (p.x*inv_dx-Vec(0.5_f)).cast<int>();
+    Vector2i base_coord =(p.x*inv_dx-Vec(0.5_f)).cast<int>();//elment-wise floor
     Vec fx = p.x * inv_dx - base_coord.cast<real>();
     // Quadratic kernels, see http://mpm.graphics Formula (123)
     Vec w[3]{Vec(0.5) * sqr(Vec(1.5) - fx), Vec(0.75) - sqr(fx - Vec(1.0)),
@@ -27,11 +27,12 @@ void advance(real dt) {
     Mat r, s; polar_decomp(p.F, r, s); //Polor decomp. for fixed corotated model
     auto stress =                           // Cauchy stress times dt and inv_dx
         -4*inv_dx*inv_dx*dt*vol*(2*mu*(p.F-r) * transposed(p.F)+lambda*(J-1)*J);
+    auto affine = stress+particle_mass*p.C;
     for (int i = 0; i < 3; i++) for (int j = 0; j < 3; j++) { // Scatter to grid
         auto dpos = (Vec(i, j) - fx) * dx;
         Vector3 mv(p.v * particle_mass, particle_mass); //translational momentum
         grid[base_coord.x + i][base_coord.y + j] +=
-             w[i].x*w[j].y * (mv + Vector3((stress+particle_mass*p.C)*dpos, 0));
+                                  w[i].x*w[j].y * (mv + Vector3(affine*dpos, 0));
       }
   }
   for(int i = 0; i <= n; i++) for(int j = 0; j <= n; j++) { //For all grid nodes
@@ -45,7 +46,7 @@ void advance(real dt) {
       }
     }
   for (auto &p : particles) {                                // Grid to particle
-    Vector2i base_coord = (p.x * inv_dx - Vec(0.5_f)).cast<int>();
+    Vector2i base_coord =(p.x*inv_dx-Vec(0.5_f)).cast<int>();//elment-wise floor
     Vec fx = p.x * inv_dx - base_coord.cast<real>();
     Vec w[3]{Vec(0.5) * sqr(Vec(1.5) - fx), Vec(0.75) - sqr(fx - Vec(1.0)),
              Vec(0.5) * sqr(fx - Vec(0.5))};
@@ -60,16 +61,15 @@ void advance(real dt) {
     p.x += dt * p.v;                                                // Advection
     auto F = (Mat(1) + dt * p.C) * p.F;                      // MLS-MPM F-update
     Mat svd_u, sig, svd_v; svd(F, svd_u, sig, svd_v);
-    for (int i = 0; i < 2; i++)                               // Snow Plasticity
+    for (int i = 0; i < 2 * int(plastic); i++)                // Snow Plasticity
       sig[i][i] = clamp(sig[i][i], 1.0_f - 2.5e-2_f, 1.0_f + 7.5e-3_f);
     real oldJ = determinant(F); F = svd_u * sig * transposed(svd_v);
     real Jp_new = clamp(p.Jp * oldJ / determinant(F), 0.6_f, 20.0_f);
     p.Jp = Jp_new; p.F = F;
   }
 }
-
 void add_object(Vec center) {                                  // Seed particles
-  for (int i = 0; i < 1000; i++) // Randomly sample 1000 particles in the square
+  for (int i = 0; i < 700; i++)  // Randomly sample 1000 particles in the square
     particles.push_back(Particle((Vec::rand()*2.0_f-Vec(1)) * 0.08_f + center));
 }
 int main() {
