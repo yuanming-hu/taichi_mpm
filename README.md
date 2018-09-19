@@ -266,8 +266,7 @@ int main() {
 
 
 ## Mathematical Comparisons with Traditional MPM
-(Assuming quadratic B-spline)
-<img src="/data/images/comparison.jpg" with="1000">
+<img src="/data/images/comparisons.jpg" with="1000">
 
 # Performance
 
