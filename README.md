@@ -27,6 +27,15 @@ and it will install this taichi package automatically.
 ### Windows and OSX
 Support coming in Sepetember.
 
+## Run demos
+Every script under the folder `scripts/mls-cpic` is executable with `python3`.
+# Visualize the results
+ - Outputs are in `taichi/outputs/mpm/`;
+ - Install [Houdini Apprentice](https://www.sidefx.com/products/houdini-apprentice/) (which is free);
+ - Create a `File` node in Houdini to visualize the `bgeo` (particles), `obj` (3D meshes), `poly` (2D polygons) files.
+
+# Python 3 API
+
 ## MPM.initialize
 (You only need to specify `res` in most cases. The default parameters generally work well.) 
 All parameters:
