@@ -183,12 +183,15 @@ Syntax:
  - Example: `source_sampling.py`, `source_sampling_2d.py`
 
 ## 88-Line Version [[Download](https://github.com/yuanming-hu/taichi_mpm/releases/download/SIGGRAPH2018/mls-mpm88.zip)]
-Supports Linux and Windows. Tested on Ubuntu 16.04, Arch Linux, MinGW, VS2017. No need to install `taichi` and `taichi_mpm` - see the end of code for instructions.
+Supports Linux and Windows. Tested on Ubuntu 16.04, Arch Linux, MinGW, VS2017.
+
+No need to install `taichi` or `taichi_mpm` - see the end of code for instructions.
+
 ``` C++
-// 88-Line Moving Least Squares Material Point Method (MLS-MPM)  [with comments]
-#include "taichi.h"    // Note: You DO NOT have to install taichi for this code.
+//88-Line 2D Moving Least Squares Material Point Method (MLS-MPM)[with comments]
+#include "taichi.h"    // Note: You DO NOT have to install taichi or taichi_mpm.
 using namespace taichi;// You only need [taichi.h] - see below for instructions.
-const int n = 64 /*grid resolution (cells)*/, window_size = 800;  // Version 1.0
+const int n = 64 /*grid resolution (cells)*/, window_size = 800;
 const real dt = 1e-4_f, frame_dt = 1e-3_f, dx = 1.0_f / n, inv_dx = 1.0_f / dx;
 auto particle_mass = 1.0_f, vol = 1.0_f;
 auto hardening = 10.0_f, E = 1e4_f, nu = 0.2_f; 
@@ -198,19 +201,19 @@ bool plastic = true;                  // set to false for purely elastic objects
 struct Particle { Vec x, v; Mat F, C; real Jp;
   Particle(Vec x, Vec v=Vec(0)) : x(x), v(v), F(1), C(0), Jp(1) {} };
 std::vector<Particle> particles;
-Vector3 grid[n + 1][n + 1];          // velocity + mass, node res = cell res + 1
+Vector3 grid[n + 1][n + 1];          // velocity + mass, node_res = cell_res + 1
 
 void advance(real dt) {
   std::memset(grid, 0, sizeof(grid));                              // Reset grid
   for (auto &p : particles) {                                             // P2G
-    Vector2i base_coord =(p.x*inv_dx-Vec(0.5_f)).cast<int>();//elment-wise floor
+    Vector2i base_coord=(p.x*inv_dx-Vec(0.5_f)).cast<int>();//element-wise floor
     Vec fx = p.x * inv_dx - base_coord.cast<real>();
-    // Quadratic kernels, see http://mpm.graphics Formula (123)
+    // Quadratic kernels  [http://mpm.graphics   Eqn. 123, with x=fx, fx-1,fx-2]
     Vec w[3]{Vec(0.5) * sqr(Vec(1.5) - fx), Vec(0.75) - sqr(fx - Vec(1.0)),
              Vec(0.5) * sqr(fx - Vec(0.5))};
     auto e = std::exp(hardening * (1.0_f - p.Jp)), mu=mu_0*e, lambda=lambda_0*e;
     real J = determinant(p.F);         //                         Current volume
-    Mat r, s; polar_decomp(p.F, r, s); //Polor decomp. for fixed corotated model
+    Mat r, s; polar_decomp(p.F, r, s); //Polar decomp. for fixed corotated model
     auto stress =                           // Cauchy stress times dt and inv_dx
         -4*inv_dx*inv_dx*dt*vol*(2*mu*(p.F-r) * transposed(p.F)+lambda*(J-1)*J);
     auto affine = stress+particle_mass*p.C;
@@ -232,7 +235,7 @@ void advance(real dt) {
       }
     }
   for (auto &p : particles) {                                // Grid to particle
-    Vector2i base_coord =(p.x*inv_dx-Vec(0.5_f)).cast<int>();//elment-wise floor
+    Vector2i base_coord=(p.x*inv_dx-Vec(0.5_f)).cast<int>();//element-wise floor
     Vec fx = p.x * inv_dx - base_coord.cast<real>();
     Vec w[3]{Vec(0.5) * sqr(Vec(1.5) - fx), Vec(0.75) - sqr(fx - Vec(1.0)),
              Vec(0.5) * sqr(fx - Vec(0.5))};
@@ -304,10 +307,15 @@ Step 2: Compile and run
 * OS X: Coming soon. If you don't want to wait, just install XQuartz and follow 
         the Linux instructions.
 
-For questions, email yuanming _at_ mit.edu
-            or visit https://github.com/yuanming-hu/taichi_mpm/issues.
+** FAQ:
+Q1: What does "1e-4_f" mean?
+A1: The same as 1e-4f.
+
+For more questions, please email yuanming _at_ mit.edu
+                    or visit https://github.com/yuanming-hu/taichi_mpm/issues.
             
                                                        Last Update: Oct 15, 2018
+                                                       Version 1.1
 ----------------------------------------------------------------------------- */
 ```
 
