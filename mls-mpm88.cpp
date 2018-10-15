@@ -1,7 +1,6 @@
 // 88-Line Moving Least Squares Material Point Method (MLS-MPM)  [with comments]
-// To compile:    g++ mls-mpm88.cpp -std=c++14 -g -lX11 -lpthread -O3 -o mls-mpm
-#include "taichi.h"      // NOTE: Make sure to download the whole mls-mpm88.zip,
-using namespace taichi;  //       which includes mls-mpm88.cpp and **taichi.h**.
+#include "taichi.h"      
+using namespace taichi;  
 const int n = 64 /*grid resolution (cells)*/, window_size = 800;  // Version 1.0
 const real dt = 1e-4_f, frame_dt = 1e-3_f, dx = 1.0_f / n, inv_dx = 1.0_f / dx;
 auto particle_mass = 1.0_f, vol = 1.0_f;
@@ -68,10 +67,12 @@ void advance(real dt) {
     p.Jp = Jp_new; p.F = F;
   }
 }
+
 void add_object(Vec center) {                                  // Seed particles
   for (int i = 0; i < 700; i++)  // Randomly sample 1000 particles in the square
     particles.push_back(Particle((Vec::rand()*2.0_f-Vec(1)) * 0.08_f + center));
 }
+
 int main() {
   GUI gui("Taichi Demo: Real-time MLS-MPM 2D ", window_size, window_size);
   add_object(Vec(0.5,0.4)); add_object(Vec(0.45,0.6));add_object(Vec(0.55,0.8));
@@ -82,7 +83,40 @@ int main() {
       for (auto p : particles)                                 // Draw particles
         gui.buffer[(p.x * (inv_dx * window_size/n)).cast<int>()] = Vector4(0.8);
       gui.update();                                              // Update image
-    }//Reference: A Moving Least Squares Material Point Method with Displacement
-  } //             Discontinuity and Two-Way Rigid Body Coupling (SIGGRAPH 2018)
-}  //  By Yuanming Hu (who also wrote this 88-line version), Yu Fang, Ziheng Ge,
-//                          Ziyin Qu, Yixin Zhu, Andre Pradhana, Chenfanfu Jiang
+    }
+  }
+} //----------------------------------------------------------------------------
+
+/* ------------------------------------------------------------------------------
+** Reference: A Moving Least Squares Material Point Method with Displacement
+              Discontinuity and Two-Way Rigid Body Coupling (SIGGRAPH 2018)
+
+  By Yuanming Hu (who also wrote this 88-line version), Yu Fang, Ziheng Ge,
+           Ziyin Qu, Yixin Zhu, Andre Pradhana, Chenfanfu Jiang
+
+
+** Build Instructions:
+
+Step 1: Download and unzip mls-mpm88.zip (Link: http://bit.ly/mls-mpm88)
+        Now you should have "mls-mpm88.cpp" and "taichi.h".
+
+Step 2: Compile and run
+
+* Linux:           g++ mls-mpm88.cpp -std=c++14 -g -lX11 -lpthread -O3 -o mls-mpm
+                   ./mls-mpm
+
+* Windows (MinGW): g++ mls-mpm88.cpp -std=c++14 -lgdi32  -lpthread -O3 -o mls-mpm
+                   .\mls-mpm.exe 
+
+* Windows (Visual Studio 2017+):
+  - Create an "Empty Project"
+  - Use taichi.h as the only header, and mls-mpm88.cpp as the only source
+  - Change configuration to "Release" and "x64"
+  - Press F5 to compile and run
+
+* OS X: Coming soon. If you don't want to wait, just install XQuartz and follow 
+        the Linux instructions.
+
+For questions, email yuanming _at_ mit.edu
+            or visit https://github.com/yuanming-hu/taichi_mpm/issues.
+----------------------------------------------------------------------------- */
