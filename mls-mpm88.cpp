@@ -1,6 +1,6 @@
 // 88-Line Moving Least Squares Material Point Method (MLS-MPM)  [with comments]
-#include "taichi.h"      
-using namespace taichi;  
+#include "taichi.h"    // Note: You DO NOT have to install taichi for this code.
+using namespace taichi;// You only need [taichi.h] - see below for instructions.
 const int n = 64 /*grid resolution (cells)*/, window_size = 800;  // Version 1.0
 const real dt = 1e-4_f, frame_dt = 1e-3_f, dx = 1.0_f / n, inv_dx = 1.0_f / dx;
 auto particle_mass = 1.0_f, vol = 1.0_f;
@@ -119,4 +119,6 @@ Step 2: Compile and run
 
 For questions, email yuanming _at_ mit.edu
             or visit https://github.com/yuanming-hu/taichi_mpm/issues.
+            
+                                                       Last Update: Oct 15, 2018
 ----------------------------------------------------------------------------- */
