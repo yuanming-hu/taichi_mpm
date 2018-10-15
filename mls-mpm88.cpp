@@ -87,7 +87,7 @@ int main() {
   }
 } //----------------------------------------------------------------------------
 
-/* ------------------------------------------------------------------------------
+/* -----------------------------------------------------------------------------
 ** Reference: A Moving Least Squares Material Point Method with Displacement
               Discontinuity and Two-Way Rigid Body Coupling (SIGGRAPH 2018)
 
