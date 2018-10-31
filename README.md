@@ -329,11 +329,11 @@ A5: Uncomment Ln 2 and 85 and create a folder named "tmp".
     The frames will be saved to "tmp/XXXXX.png".
 
     To get a video, you can use ffmpeg. If you already have taichi installed,
-    you can simply go to that folder and execute
+    you can simply go to the "tmp" folder and execute
 
       ti video 60
 
-    where 60 stands for 60 FPS.
+    where 60 stands for 60 FPS. A file named "video.mp4" is what you want.
 
 
 For more questions, please email yuanming _at_ mit.edu
