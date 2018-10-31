@@ -131,11 +131,15 @@ Step 1: Download and unzip mls-mpm88.zip (Link: http://bit.ly/mls-mpm88)
 
 Step 2: Compile and run
 
-* Linux:          g++ mls-mpm88.cpp -std=c++14 -g -lX11 -lpthread -O3 -o mls-mpm
-                  ./mls-mpm
+* Linux:
+    g++ mls-mpm88.cpp -std=c++14 -g -lX11 -lpthread -O3 -o mls-mpm
+    ./mls-mpm
 
-* Windows (MinGW): g++ mls-mpm88.cpp -std=c++14 -lgdi32 -lpthread -O3 -o mls-mpm
-                   .\mls-mpm.exe
+
+* Windows (MinGW):
+    g++ mls-mpm88.cpp -std=c++14 -lgdi32 -lpthread -O3 -o mls-mpm
+    .\mls-mpm.exe
+
 
 * Windows (Visual Studio 2017+):
   - Create an "Empty Project"
@@ -143,8 +147,11 @@ Step 2: Compile and run
   - Change configuration to "Release" and "x64"
   - Press F5 to compile and run
 
-* OS X: Coming soon. If you don't want to wait, just install XQuartz and follow
-        the Linux instructions.
+
+* OS X:
+    g++ mls-mpm88.cpp -std=c++14 -framework Cocoa -lpthread -O3 -o mls-mpm
+    ./mls-mpm
+
 
 ** FAQ:
 Q1: What does "1e-4_f" mean?
