@@ -51,17 +51,6 @@ readers()
     static bool initialized=false;
     if(!initialized){
         data["bgeo"]=readBGEO;
-        data["geo"]=readGEO;
-        data["pdb"]=readPDB;
-        data["pdb32"]=readPDB32;
-        data["pdb64"]=readPDB64;
-        data["pda"]=readPDA;
-        data["mc"]=readMC;
-        data["ptc"]=readPTC;
-        data["pdc"]=readPDC;
-        data["prt"]=readPRT;
-        data["bin"]=readBIN;
-        data["pts"]=readPTS;
     }
     return data;
 }
@@ -73,16 +62,6 @@ writers()
     static bool initialized=false;
     if(!initialized){
         data["bgeo"]=writeBGEO;
-        data["geo"]=writeGEO;
-        data["pdb"]=writePDB;
-        data["pdb32"]=writePDB32;
-        data["pdb64"]=writePDB64;
-        data["pda"]=writePDA;
-        data["ptc"]=writePTC;
-        data["rib"]=writeRIB;
-        data["pdc"]=writePDC;
-        data["prt"]=writePRT;
-        data["bin"]=writeBIN;
     }
     return data;
 }
