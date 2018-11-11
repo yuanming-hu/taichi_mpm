@@ -26,10 +26,10 @@ Vector3 grid[n + 1][n + 1];  // velocity + mass, node_res = cell_res + 1
 // http://zetcode.com/tutorials/javaswingtutorial/thetetrisgame/
 int tetris_offsets[7][3][2] = {
     // excluding center
-    {{0, -1}, {-1, 0}, {-2, 0}}, {{0, 1}, {-1, 0}, {-2, 0}},
-    {{1, 0}, {-1, 0}, {1, 1}},   {{0, 1}, {1, 0}, {1, 1}},
-    {{0, 1}, {0, -1}, {0, 2}},   {{0, 1}, {0, -1}, {0, 2}},
-};
+    {{0, -1}, {1, 0}, {0, -2}},  {{1, 1}, {-1, 0}, {1, 0}},
+    {{0, -1}, {-1, 0}, {0, -2}}, {{0, 1}, {1, 0}, {1, -1}},
+    {{1, 0}, {2, 0}, {-1, 0}},   {{0, 1}, {1, 1}, {1, 1}},
+    {{-1, 0}, {1, 0}, {0, 1}}};
 
 void advance(real dt) {
   std::memset(grid, 0, sizeof(grid));  // Reset grid
@@ -114,15 +114,16 @@ void advance(real dt) {
   }
 }
 
-void add_object(Vec center, int c, int type, int block) {
+void add_object(Vec center, int type, int block) {
   auto gen = [&](int k) {
     Vector2 offset(0, 0);
     if (k >= 0)
       offset =
           Vector2(tetris_offsets[block][k][0], tetris_offsets[block][k][1]);
+    int colors[] {0xED553B, 0xF2B134, 0x068587};
     for (int i = 0; i < 30 * pow<2>(n / 80.0); i++)
       particles.push_back(
-          Particle((Vec::rand() + offset) * 0.05_f + center, c, type));
+          Particle((Vec::rand() + offset) * 0.05_f + center, colors[type], type));
   };
   gen(-1);
   gen(0);
@@ -132,9 +133,9 @@ void add_object(Vec center, int c, int type, int block) {
 
 int main() {
   GUI gui("Real-time 2D MLS-MPM", window_size, window_size);
-  add_object(Vec(0.55, 0.45), 0xED553B, 0, 0);
-  add_object(Vec(0.45, 0.65), 0xF2B134, 1, 1);
-  add_object(Vec(0.55, 0.75), 0x068587, 2, 2);
+  for (int i = 0; i < 7; i++) {
+    add_object(Vector2(0.3 + i % 2 * 0.3, 0.2 + i * 0.08), i % 3, i);
+  }
   auto &canvas = gui.get_canvas();
   int f = 0;
   for (int i = 0;; i++) {               //              Main Loop
