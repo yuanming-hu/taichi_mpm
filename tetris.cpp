@@ -36,9 +36,14 @@ void advance(real dt) {
     real J = determinant(p.F);  //                         Current volume
     Mat r, s;
     polar_decomp(p.F, r, s);  // Polar decomp. for fixed corotated model
-    auto stress =             // Cauchy stress times dt and inv_dx
-        -4 * inv_dx * inv_dx * dt * vol *
-        (2 * mu * (p.F - r) * transposed(p.F) + lambda * (J - 1) * J);
+    Mat cauchy;
+    if (p.type == 2) {
+      cauchy = Mat(0.2_f * E * (pow<1>(p.Jp) - 1));
+    } else {
+      cauchy = 2 * mu * (p.F - r) * transposed(p.F) + lambda * (J - 1) * J;
+    }
+    auto stress =  // Cauchy stress times dt and inv_dx
+        -4 * inv_dx * inv_dx * dt * vol * cauchy;
     auto affine = stress + particle_mass * p.C;
     for (int i = 0; i < 3; i++)
       for (int j = 0; j < 3; j++) {  // Scatter to grid
@@ -94,6 +99,8 @@ void advance(real dt) {
         p.Jp = Jp_new;
       }
       p.F = F;
+    } else {  // liquid
+      p.Jp *= determinant(Mat(1) + dt * p.C);
     }
   }
 }
@@ -108,7 +115,7 @@ int main() {
   GUI gui("Real-time 2D MLS-MPM", window_size, window_size);
   add_object(Vec(0.55, 0.45), 0xED553B, 0);
   add_object(Vec(0.45, 0.65), 0xF2B134, 1);
-  add_object(Vec(0.55, 0.85), 0x068587, 1);
+  add_object(Vec(0.55, 0.85), 0x068587, 2);
   auto &canvas = gui.get_canvas();
   int f = 0;
   for (int i = 0;; i++) {               //              Main Loop
