@@ -132,7 +132,7 @@ void add_object(Vec center, int type, int block) {
 }
 
 int main() {
-  GUI gui("Real-time 2D MLS-MPM", window_size, window_size);
+  GUI gui("MLS-MPM Tetris", window_size, window_size);
   for (int i = 0; i < 7; i++) {
     add_object(Vector2(0.3 + i % 2 * 0.3, 0.2 + i * 0.08), i % 3, i);
   }
