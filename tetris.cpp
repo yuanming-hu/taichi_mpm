@@ -2,7 +2,8 @@
 using namespace taichi;  // You only need [taichi.h] - see below for
                          // instructions.
 const int n = 160 /*grid resolution (cells)*/, window_size = 800;
-const real dt = 60e-4_f / n, frame_dt = 1e-3_f, dx = 1.0_f / n, inv_dx = 1.0_f / dx;
+const real dt = 60e-4_f / n, frame_dt = 1e-3_f, dx = 1.0_f / n,
+           inv_dx = 1.0_f / dx;
 auto particle_mass = 1.0_f, vol = 1.0_f;
 auto hardening = 10.0_f, E = 1e4_f, nu = 0.2_f;
 real mu_0 = E / (2 * (1 + nu)), lambda_0 = E * nu / ((1 + nu) * (1 - 2 * nu));
@@ -21,6 +22,14 @@ struct Particle {
 };
 std::vector<Particle> particles;
 Vector3 grid[n + 1][n + 1];  // velocity + mass, node_res = cell_res + 1
+
+// http://zetcode.com/tutorials/javaswingtutorial/thetetrisgame/
+int tetris_offsets[7][3][2] = {
+    // excluding center
+    {{0, -1}, {-1, 0}, {-2, 0}}, {{0, 1}, {-1, 0}, {-2, 0}},
+    {{1, 0}, {-1, 0}, {1, 1}},   {{0, 1}, {1, 0}, {1, 1}},
+    {{0, 1}, {0, -1}, {0, 2}},   {{0, 1}, {0, -1}, {0, 2}},
+};
 
 void advance(real dt) {
   std::memset(grid, 0, sizeof(grid));  // Reset grid
@@ -105,17 +114,27 @@ void advance(real dt) {
   }
 }
 
-void add_object(Vec center, int c, int type) {
-  for (int i = 0; i < 500 * pow<2>(n / 80.0); i++)
-    particles.push_back(
-        Particle((Vec::rand() * 2.0_f - Vec(1)) * 0.08_f + center, c, type));
+void add_object(Vec center, int c, int type, int block) {
+  auto gen = [&](int k) {
+    Vector2 offset(0, 0);
+    if (k >= 0)
+      offset =
+          Vector2(tetris_offsets[block][k][0], tetris_offsets[block][k][1]);
+    for (int i = 0; i < 30 * pow<2>(n / 80.0); i++)
+      particles.push_back(
+          Particle((Vec::rand() + offset) * 0.05_f + center, c, type));
+  };
+  gen(-1);
+  gen(0);
+  gen(1);
+  gen(2);
 }
 
 int main() {
   GUI gui("Real-time 2D MLS-MPM", window_size, window_size);
-  add_object(Vec(0.55, 0.45), 0xED553B, 0);
-  add_object(Vec(0.45, 0.65), 0xF2B134, 1);
-  add_object(Vec(0.55, 0.85), 0x068587, 2);
+  add_object(Vec(0.55, 0.45), 0xED553B, 0, 0);
+  add_object(Vec(0.45, 0.65), 0xF2B134, 1, 1);
+  add_object(Vec(0.55, 0.75), 0x068587, 2, 2);
   auto &canvas = gui.get_canvas();
   int f = 0;
   for (int i = 0;; i++) {               //              Main Loop
