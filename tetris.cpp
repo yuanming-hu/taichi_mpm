@@ -1,6 +1,3 @@
-// 88-Line 2D Moving Least Squares Material Point Method (MLS-MPM)[with
-// comments]
-#define TC_IMAGE_IO  // Uncomment this line for image exporting functionality
 #include "taichi.h"  // Note: You DO NOT have to install taichi or taichi_mpm.
 using namespace taichi;  // You only need [taichi.h] - see below for
                          // instructions.
@@ -11,13 +8,15 @@ auto hardening = 10.0_f, E = 1e4_f, nu = 0.2_f;
 real mu_0 = E / (2 * (1 + nu)), lambda_0 = E * nu / ((1 + nu) * (1 - 2 * nu));
 using Vec = Vector2;
 using Mat = Matrix2;
-bool plastic = true;
+
 struct Particle {
   Vec x, v;
   Mat F, C;
   real Jp;
   int c /*color*/;
-  Particle(Vec x, int c, Vec v = Vec(0)) : x(x), v(v), F(1), C(0), Jp(1), c(c) {
+  int type;  // 0: elastic   1: plastic   2: liquid
+  Particle(Vec x, int c, int type, Vec v = Vec(0))
+      : x(x), v(v), F(1), C(0), Jp(1), c(c), type(type) {
   }
 };
 std::vector<Particle> particles;
@@ -81,29 +80,35 @@ void advance(real dt) {
         p.C +=
             4 * inv_dx * Mat::outer_product(weight * grid_v, dpos);  // APIC C
       }
-    p.x += dt * p.v;                     // Advection
-    auto F = (Mat(1) + dt * p.C) * p.F;  // MLS-MPM F-update
-    Mat svd_u, sig, svd_v;
-    svd(F, svd_u, sig, svd_v);
-    for (int i = 0; i < 2 * int(plastic); i++)  // Snow Plasticity
-      sig[i][i] = clamp(sig[i][i], 1.0_f - 2.5e-2_f, 1.0_f + 7.5e-3_f);
-    real oldJ = determinant(F);
-    F = svd_u * sig * transposed(svd_v);
-    real Jp_new = clamp(p.Jp * oldJ / determinant(F), 0.6_f, 20.0_f);
-    p.Jp = Jp_new;
-    p.F = F;
+    p.x += dt * p.v;                       // Advection
+    if (p.type <= 1) {                     // plastic
+      auto F = (Mat(1) + dt * p.C) * p.F;  // MLS-MPM F-update
+      if (p.type == 1) {
+        Mat svd_u, sig, svd_v;
+        svd(F, svd_u, sig, svd_v);
+        for (int i = 0; i < 2; i++)  // Snow Plasticity
+          sig[i][i] = clamp(sig[i][i], 1.0_f - 2.5e-2_f, 1.0_f + 7.5e-3_f);
+        real oldJ = determinant(F);
+        F = svd_u * sig * transposed(svd_v);
+        real Jp_new = clamp(p.Jp * oldJ / determinant(F), 0.6_f, 20.0_f);
+        p.Jp = Jp_new;
+      }
+      p.F = F;
+    }
   }
 }
-void add_object(Vec center, int c) {  // Seed particles with position and color
-  for (int i = 0; i < 500; i++)  // Randomly sample 1000 particles in the square
+
+void add_object(Vec center, int c, int type) {
+  for (int i = 0; i < 500; i++)
     particles.push_back(
-        Particle((Vec::rand() * 2.0_f - Vec(1)) * 0.08_f + center, c));
+        Particle((Vec::rand() * 2.0_f - Vec(1)) * 0.08_f + center, c, type));
 }
+
 int main() {
   GUI gui("Real-time 2D MLS-MPM", window_size, window_size);
-  add_object(Vec(0.55, 0.45), 0xED553B);
-  add_object(Vec(0.45, 0.65), 0xF2B134);
-  add_object(Vec(0.55, 0.85), 0x068587);
+  add_object(Vec(0.55, 0.45), 0xED553B, 0);
+  add_object(Vec(0.45, 0.65), 0xF2B134, 1);
+  add_object(Vec(0.55, 0.85), 0x068587, 1);
   auto &canvas = gui.get_canvas();
   int f = 0;
   for (int i = 0;; i++) {               //              Main Loop
