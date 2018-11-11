@@ -1,8 +1,8 @@
 #include "taichi.h"  // Note: You DO NOT have to install taichi or taichi_mpm.
 using namespace taichi;  // You only need [taichi.h] - see below for
                          // instructions.
-const int n = 80 /*grid resolution (cells)*/, window_size = 800;
-const real dt = 1e-4_f, frame_dt = 1e-3_f, dx = 1.0_f / n, inv_dx = 1.0_f / dx;
+const int n = 160 /*grid resolution (cells)*/, window_size = 800;
+const real dt = 60e-4_f / n, frame_dt = 1e-3_f, dx = 1.0_f / n, inv_dx = 1.0_f / dx;
 auto particle_mass = 1.0_f, vol = 1.0_f;
 auto hardening = 10.0_f, E = 1e4_f, nu = 0.2_f;
 real mu_0 = E / (2 * (1 + nu)), lambda_0 = E * nu / ((1 + nu) * (1 - 2 * nu));
@@ -106,7 +106,7 @@ void advance(real dt) {
 }
 
 void add_object(Vec center, int c, int type) {
-  for (int i = 0; i < 500; i++)
+  for (int i = 0; i < 500 * pow<2>(n / 80.0); i++)
     particles.push_back(
         Particle((Vec::rand() * 2.0_f - Vec(1)) * 0.08_f + center, c, type));
 }
