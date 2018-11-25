@@ -7,7 +7,7 @@ By [Yuanming Hu (MIT CSAIL)](http://taichi.graphics/me/), [Yu Fang (Tsinghua Uni
 
 **Note: this software is released under the GPLv3.0 license. For commercial use, please email Yuanming Hu for negotiation.**
 
-#### [[Introduction & Demo Video](https://www.youtube.com/watch?v=8iyvhGF9f7o)] [[Paper](http://taichi.graphics/wp-content/uploads/2018/05/mls-mpm-cpic.pdf)] [[Supplemental Document](http://taichi.graphics/wp-content/uploads/2018/04/mls-mpm-cpic-supp.pdf)] [[88-Line MLS-MPM](https://github.com/yuanming-hu/taichi_mpm/blob/master/mls-mpm88.cpp)]
+#### [[Introduction & Demo Video](https://www.youtube.com/watch?v=8iyvhGF9f7o)] [[Paper](http://taichi.graphics/wp-content/uploads/2018/05/mls-mpm-cpic.pdf)] [[Supplemental Document](http://taichi.graphics/wp-content/uploads/2018/04/mls-mpm-cpic-supp.pdf)] [[88-Line MLS-MPM](https://github.com/yuanming-hu/taichi_mpm#88-line-version-download)]
 #### [[SIGGRAPH 2018 Fast Forward](https://youtu.be/9RlNEgwTtPI)] [[PDF Slides](https://github.com/yuanming-hu/taichi_mpm/releases/download/SIGGRAPH2018/mls-mpm-cpic-slides.pdf)] [[PDF Slides with Notes](https://github.com/yuanming-hu/taichi_mpm/releases/download/SIGGRAPH2018/mls-mpm-cpic-slides-with-notes.pdf)]
 
 
