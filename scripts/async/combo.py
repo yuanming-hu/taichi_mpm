@@ -18,7 +18,7 @@ if __name__ == '__main__':
         verbose_bgeo=True,
         gravity=(0, -10, 0),
         task_id=task_id,
-        max_units=256,
+        max_units=128,
         strength_dt_mul=0.8,
         num_frames=240)
   else:
