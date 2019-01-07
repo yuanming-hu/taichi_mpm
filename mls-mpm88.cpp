@@ -68,7 +68,7 @@ void advance(real dt) {
   }
 }
 void add_object(Vec center, int c) {   // Seed particles with position and color
-  for (int i = 0; i < 500; i++)  // Randomly sample 1000 particles in the square
+  for (int i = 0; i < 1000; i++)  // Randomly sample 1000 particles in the square
     particles.push_back(Particle((Vec::rand()*2.0_f-Vec(1))*0.08_f + center, c));
 }
 int main() {
@@ -139,7 +139,7 @@ A3: They are RGB color values.
 Q4: How can I get higher-quality?
 A4: Change n to 320; Change dt to 1e-5; Change E to 2e4;
     Change particle per cube from 500 to 8000 (Ln 72).
-    After the change the whole animation takes ~3 minutes on my computer.
+    After the change, the whole animation takes ~3 minutes on my computer.
 
 Q5: How to record the animation?
 A5: Uncomment Ln 2 and 85 and create a folder named "tmp".
@@ -156,7 +156,7 @@ A5: Uncomment Ln 2 and 85 and create a folder named "tmp".
 For more questions, please email yuanming _at_ mit.edu
                     or visit https://github.com/yuanming-hu/taichi_mpm/issues.
 
-                                                       Last Update: Oct 30, 2018
-                                                       Version 1.3
+                                                       Last Update: Nov 16, 2018
+                                                       Version 1.4
 
 ----------------------------------------------------------------------------- */
