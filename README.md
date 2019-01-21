@@ -199,8 +199,9 @@ Then, in command line
 ti install mpm
 ```
 and it will install this taichi package automatically.
+
 ### Windows and OSX
-Support coming in September or October.
+Support coming later.
 
 ## Run demos
 Every script under the folder `scripts/mls-cpic` is executable with `python3`.
