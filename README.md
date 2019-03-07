@@ -19,7 +19,7 @@ By [Yuanming Hu (MIT CSAIL)](http://taichi.graphics/me/), [Yu Fang (Tsinghua Uni
 
 ## 88-Line Version (MIT License) [[Download](https://github.com/yuanming-hu/taichi_mpm/releases/download/SIGGRAPH2018/mls-mpm88.zip)]
 
-Supports Linux, OS X and Windows. Tested on Ubuntu 16.04, Arch Linux, MinGW, VS2017, OS X 10.11.
+Supports Linux, OS X and Windows. Tested on Ubuntu 16.04, Ubuntu 18.04, Arch Linux, MinGW, VS2017, OS X 10.11~10.14.
 No need to install `taichi` or `taichi_mpm` - see the end of code for instructions.
 
 <img src="https://github.com/yuanming-hu/public_files/raw/master/graphics/mls-mpm-cpic/mls-mpm88-lowres.gif" width="400px"> <img src="https://github.com/yuanming-hu/public_files/raw/master/graphics/mls-mpm-cpic/mls-mpm88-highres.gif" width="400px">
@@ -27,7 +27,7 @@ No need to install `taichi` or `taichi_mpm` - see the end of code for instructio
 
 ``` C++
 //88-Line 2D Moving Least Squares Material Point Method (MLS-MPM)[with comments]
-#define TC_IMAGE_IO   // Uncomment this line for image exporting functionality
+//#define TC_IMAGE_IO   // Uncomment this line for image exporting functionality
 #include "taichi.h"    // Note: You DO NOT have to install taichi or taichi_mpm.
 using namespace taichi;// You only need [taichi.h] - see below for instructions.
 const int n = 80 /*grid resolution (cells)*/, window_size = 800;
@@ -154,7 +154,7 @@ Step 2: Compile and run
 
 ** FAQ:
 Q1: What does "1e-4_f" mean?
-A1: The same as 1e-4f.
+A1: The same as 1e-4f, a float precision real number.
 
 Q2: What is "real"?
 A2: real = float in this file.
@@ -180,12 +180,18 @@ A5: Uncomment Ln 2 and 85 and create a folder named "tmp".
 
     where 60 stands for 60 FPS. A file named "video.mp4" is what you want.
 
+Q6: How is taichi.h generated?
+A6: Please check out my #include <taichi> talk:
+    http://taichi.graphics/wp-content/uploads/2018/11/include_taichi.pdf
+    and the generation script:
+    https://github.com/yuanming-hu/taichi/blob/master/misc/amalgamate.py
+    You can regenerate it using `ti amal`, if you have taichi installed.
 
-For more questions, please email yuanming _at_ mit.edu
-                    or visit https://github.com/yuanming-hu/taichi_mpm/issues.
+Questions go to yuanming _at_ mit.edu
+                            or https://github.com/yuanming-hu/taichi_mpm/issues.
 
-                                                       Last Update: Oct 30, 2018
-                                                       Version 1.3
+                                                      Last Update: March 6, 2019
+                                                      Version 1.5
 
 ----------------------------------------------------------------------------- */
 ```
