@@ -40,7 +40,7 @@ struct Particle {
   Vec x, v;
   // Deformation gradient
   Mat F;
-  // Affine momentum
+  // Affine momentum from APIC
   Mat C;
   // Determinant of the deformation gradient (i.e. volume)
   real Jp;
