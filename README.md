@@ -19,7 +19,7 @@ By [Yuanming Hu (MIT CSAIL)](http://taichi.graphics/me/), [Yu Fang (Tsinghua Uni
 <img src="https://github.com/yuanming-hu/public_files/raw/master/graphics/mls-mpm-cpic/banana.gif"> <img src="https://github.com/yuanming-hu/public_files/raw/master/graphics/mls-mpm-cpic/cheese.gif">
 
 
-## 88-Line Version (MIT License) [[Download C++ & Javascript version](https://github.com/yuanming-hu/taichi_mpm/releases/download/SIGGRAPH2018/mls-mpm88.zip)]
+## 88-Line Version (MIT License) [[Download C++ & Javascript versions](https://github.com/yuanming-hu/taichi_mpm/releases/download/SIGGRAPH2018/mls-mpm88.zip)]
 
 Supports Linux, OS X and Windows. Tested on Ubuntu 16.04, Ubuntu 18.04, Arch Linux, MinGW, VS2017, OS X 10.11~10.14.
 No need to install `taichi` or `taichi_mpm` - see the end of code for instructions.
