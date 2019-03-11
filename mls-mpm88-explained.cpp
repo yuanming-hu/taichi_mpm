@@ -122,7 +122,7 @@ void advance(real dt) {
     for(int j = 0; j <= n; j++) {
       auto &g = grid[i][j];
       // No need for epsilon here
-      if (g[2] <= 0) {
+      if (g[2] > 0) {
         // Normalize by mass
         g /= g[2];
         // Gravity
@@ -254,24 +254,24 @@ Step 1: Download and unzip mls-mpm88.zip (Link: http://bit.ly/mls-mpm88)
 Step 2: Compile and run
 
 * Linux:
-    g++ mls-mpm88.cpp -std=c++14 -g -lX11 -lpthread -O3 -o mls-mpm
+    g++ mls-mpm88-explained.cpp -std=c++14 -g -lX11 -lpthread -O3 -o mls-mpm
     ./mls-mpm
 
 
 * Windows (MinGW):
-    g++ mls-mpm88.cpp -std=c++14 -lgdi32 -lpthread -O3 -o mls-mpm
+    g++ mls-mpm88-explained.cpp -std=c++14 -lgdi32 -lpthread -O3 -o mls-mpm
     .\mls-mpm.exe
 
 
 * Windows (Visual Studio 2017+):
   - Create an "Empty Project"
-  - Use taichi.h as the only header, and mls-mpm88.cpp as the only source
+  - Use taichi.h as the only header, and mls-mpm88-explained.cpp as the only source
   - Change configuration to "Release" and "x64"
   - Press F5 to compile and run
 
 
 * OS X:
-    g++ mls-mpm88.cpp -std=c++14 -framework Cocoa -lpthread -O3 -o mls-mpm
+    g++ mls-mpm88-explained.cpp -std=c++14 -framework Cocoa -lpthread -O3 -o mls-mpm
     ./mls-mpm
 
 
