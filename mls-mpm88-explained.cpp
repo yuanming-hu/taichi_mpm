@@ -1,4 +1,5 @@
-//  88-Line 2D Moving Least Squares Material Point Method (MLS-MPM) [Explained Version]
+//  88-Line 2D Moving Least Squares Material Point Method (MLS-MPM)
+// [Explained Version by David Medina]
 
 // Uncomment this line for image exporting functionality
 #define TC_IMAGE_IO
@@ -39,9 +40,9 @@ struct Particle {
   Vec x, v;
   // Deformation gradient
   Mat F;
-  // Cauchy-Green tensor
+  // Affine momentum
   Mat C;
-  // Determinant of the deformation gradient
+  // Determinant of the deformation gradient (i.e. volume)
   real Jp;
   // Color
   int c;
@@ -98,6 +99,9 @@ void advance(real dt) {
     // Cauchy stress times dt and inv_dx
     auto stress = - (dt * vol) * (Dinv * PF);
 
+    // Fused APIC momentum + MLS-MPM stress contribution
+    // See http://taichi.graphics/wp-content/uploads/2019/03/mls-mpm-cpic.pdf
+    // Eqn 29
     auto affine = stress + particle_mass * p.C;
 
     // P2G
@@ -234,7 +238,6 @@ int main() {
   }
 }
 
-
 /* -----------------------------------------------------------------------------
 ** Reference: A Moving Least Squares Material Point Method with Displacement
               Discontinuity and Two-Way Rigid Body Coupling (SIGGRAPH 2018)
@@ -274,7 +277,7 @@ Step 2: Compile and run
 
 ** FAQ:
 Q1: What does "1e-4_f" mean?
-A1: The same as 1e-4f.
+A1: The same as 1e-4f, a float precision real number.
 
 Q2: What is "real"?
 A2: real = float in this file.
@@ -287,7 +290,7 @@ A3: They are RGB color values.
 Q4: How can I get higher-quality?
 A4: Change n to 320; Change dt to 1e-5; Change E to 2e4;
     Change particle per cube from 500 to 8000 (Ln 72).
-    After the change, the whole animation takes ~3 minutes on my computer.
+    After the change the whole animation takes ~3 minutes on my computer.
 
 Q5: How to record the animation?
 A5: Uncomment Ln 2 and 85 and create a folder named "tmp".
@@ -300,11 +303,17 @@ A5: Uncomment Ln 2 and 85 and create a folder named "tmp".
 
     where 60 stands for 60 FPS. A file named "video.mp4" is what you want.
 
+Q6: How is taichi.h generated?
+A6: Please check out my #include <taichi> talk:
+    http://taichi.graphics/wp-content/uploads/2018/11/include_taichi.pdf
+    and the generation script:
+    https://github.com/yuanming-hu/taichi/blob/master/misc/amalgamate.py
+    You can regenerate it using `ti amal`, if you have taichi installed.
 
-For more questions, please email yuanming _at_ mit.edu
-                    or visit https://github.com/yuanming-hu/taichi_mpm/issues.
+Questions go to yuanming _at_ mit.edu
+                            or https://github.com/yuanming-hu/taichi_mpm/issues.
 
-                                                       Last Update: Nov 16, 2018
-                                                       Version 1.4
+                                                      Last Update: March 6, 2019
+                                                      Version 1.5
 
 ----------------------------------------------------------------------------- */
