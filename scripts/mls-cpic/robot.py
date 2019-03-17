@@ -87,7 +87,7 @@ if __name__ == '__main__':
         initial_position=center_position,
         scale=(0.12 * robot_scale, 0.016 * robot_scale, 0.02 * robot_scale),
         angular_damping=0,
-        mesh_fn='projects/mpm/data/box.obj',
+        mesh_fn='$mpm/box.obj',
         friction=body_friction)
 
     if battery_option:
@@ -98,7 +98,7 @@ if __name__ == '__main__':
           initial_position=battery_position,
           scale=(0.008 * robot_scale, 0.008 * robot_scale, 0.008 * robot_scale),
           angular_damping=0,
-          mesh_fn='projects/mpm/data/sphere_small.obj',
+          mesh_fn='$mpm/sphere_small.obj',
           friction=body_friction)
       mpm.add_articulation(
           type='distance',
@@ -120,7 +120,7 @@ if __name__ == '__main__':
             initial_position=center_position + offsets[i] + wheel_offset,
             scale=(-s * sign * robot_scale, s * robot_scale * 1.5,
                    s * robot_scale),
-            mesh_fn='projects/mpm/data/robot_leg.obj',
+            mesh_fn='$mpm/robot_leg.obj',
             friction=leg_friction,
             angular_damping=0)
       else:
@@ -133,7 +133,7 @@ if __name__ == '__main__':
             initial_position=center_position + offsets[i] + wheel_offset,
             scale=(s * sign * robot_scale, s * robot_scale * 1.5,
                    s * robot_scale),
-            mesh_fn='projects/mpm/data/robot_leg.obj',
+            mesh_fn='$mpm/robot_leg.obj',
             friction=leg_friction,
             angular_damping=0)
 
@@ -156,7 +156,7 @@ if __name__ == '__main__':
           (offsets[i] + offsets[i + num_wheels // 2]) * 0.5,
           initial_rotation=(0, 90, 0),
           scale=(rod_lengths[i], t, t),
-          mesh_fn='projects/mpm/data/cylinder_horizental.obj',
+          mesh_fn='$mpm/cylinder_horizental.obj',
           friction=rod_friction,)
       mpm.add_articulation(
           type='stepper',

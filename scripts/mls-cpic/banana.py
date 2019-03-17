@@ -25,7 +25,7 @@ if __name__ == '__main__':
       translate=(0.4, 0.5, 0.55),
       scale=(0.05, 0.07, 0.07),
       adaptive=False,
-      filename='projects/mpm/data/banana.obj') * 10
+      filename='$mpm/banana.obj') * 10
 
   mpm.add_particles(
       type='von_mises',
@@ -73,5 +73,5 @@ if __name__ == '__main__':
       scripted_position=tc.function13(position_function),
       scripted_rotation=tc.function13(rotation_function),
       codimensional=True,
-      mesh_fn='projects/mpm/data/flat_cutter_customize.obj')
+      mesh_fn='$mpm/flat_cutter_customize.obj')
   mpm.simulate(clear_output_directory=True)

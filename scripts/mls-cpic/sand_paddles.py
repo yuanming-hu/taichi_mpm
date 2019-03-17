@@ -31,7 +31,7 @@ if __name__ == '__main__':
         reverse_vertices=False,
         friction=friction,
         angular_damping=damping,
-        mesh_fn='projects/mpm/data/paddle_complex.obj')
+        mesh_fn='$mpm/paddle_complex.obj')
 
   def frame_update(t, frame_dt):
     tex = tc.Texture('ring', outer=0.02)

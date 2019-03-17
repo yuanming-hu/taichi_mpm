@@ -27,7 +27,7 @@ if __name__ == '__main__':
       translate=(0.5, 0.43, 0.5),
       scale=(0.7, 0.4, 0.7),
       adaptive=False,
-      filename='projects/mpm/data/sand_mountain.obj') * 8
+      filename='$mpm/sand_mountain.obj') * 8
 
   mpm.add_particles(
       type='sand',
@@ -59,6 +59,6 @@ if __name__ == '__main__':
       scripted_position=tc.function13(position_function),
       scripted_rotation=tc.function13(rotation_function),
       codimensional=True,
-      mesh_fn='projects/mpm/data/flat_cutter_high_res.obj')
+      mesh_fn='$mpm/flat_cutter_high_res.obj')
 
   mpm.simulate(clear_output_directory=True)

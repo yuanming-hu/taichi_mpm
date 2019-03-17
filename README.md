@@ -368,7 +368,7 @@ Syntax:
 
 
 ## Mathematical Comparisons with Traditional MPM
-<img src="/data/images/comparisons.jpg" with="1000">
+<img src="/images/comparisons.jpg" with="1000">
 
 # Performance
 

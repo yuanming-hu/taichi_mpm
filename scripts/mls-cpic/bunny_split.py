@@ -24,7 +24,7 @@ if __name__ == '__main__':
       translate=(0.5, 0.56, 0.47),
       scale=(0.4, 0.4, 0.4),
       adaptive=False,
-      filename='projects/mpm/data/bunny_small.obj') * 15
+      filename='$mpm/bunny_small.obj') * 15
 
   mpm.add_particles(
       type='jelly',
@@ -54,7 +54,7 @@ if __name__ == '__main__':
       scripted_position=tc.function13(position_function),
       scripted_rotation=tc.function13(rotation_function1),
       codimensional=True,
-      mesh_fn='projects/mpm/data/flat_cutter_medium_res.obj')
+      mesh_fn='$mpm/flat_cutter_medium_res.obj')
 
   mpm.add_particles(
       type='rigid',
@@ -64,6 +64,6 @@ if __name__ == '__main__':
       scripted_position=tc.function13(position_function),
       scripted_rotation=tc.function13(rotation_function2),
       codimensional=True,
-      mesh_fn='projects/mpm/data/flat_cutter_medium_res.obj')
+      mesh_fn='$mpm/flat_cutter_medium_res.obj')
 
   mpm.simulate(clear_output_directory=True)

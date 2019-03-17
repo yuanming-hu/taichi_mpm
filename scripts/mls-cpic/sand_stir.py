@@ -31,7 +31,7 @@ if __name__ == '__main__':
       resolution=(2 * r, 2 * r, 2 * r),
       translate=(0.5, 0.6, 0.5),
       scale=(1, 1, 1),
-      filename='projects/mpm/data/bowl_init_sand.obj') * 10
+      filename='$mpm/bowl_init_sand.obj') * 10
 
   mpm.add_particles(
       type='sand',
@@ -49,7 +49,7 @@ if __name__ == '__main__':
       scripted_position=tc.function13(position_function),
       scripted_rotation=tc.function13(rotation_function),
       codimensional=True,
-      mesh_fn='projects/mpm/data/ellipse_cutter.obj')
+      mesh_fn='$mpm/ellipse_cutter.obj')
 
   def frame_update(t, frame_dt):
     tex = tc.Texture(
@@ -57,7 +57,7 @@ if __name__ == '__main__':
         resolution=(2 * r, 2 * r, 2 * r),
         translate=(0.5, 0.55, 0.22),
         scale=(0.5, 0.5, 0.5),
-        filename='projects/mpm/data/sphere.obj') * 10
+        filename='$mpm/sphere.obj') * 10
 
     if (t < end_t - start_t):
       mpm.add_particles(

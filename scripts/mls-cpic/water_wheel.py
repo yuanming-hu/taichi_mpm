@@ -28,7 +28,7 @@ if __name__ == '__main__':
       rotation_axis=(0, 0, 1),
       codimensional=True,
       angular_damping=damping,
-      mesh_fn='projects/mpm/data/ww_cylinder.obj')
+      mesh_fn='$mpm/ww_cylinder.obj')
 
   object2 = mpm.add_particles(
       type='rigid',
@@ -39,7 +39,7 @@ if __name__ == '__main__':
       rotation_axis=(0, 0, 1),
       codimensional=True,
       angular_damping=damping,
-      mesh_fn='projects/mpm/data/ww_gears.obj')
+      mesh_fn='$mpm/ww_gears.obj')
 
   object3 = mpm.add_particles(
       type='rigid',
@@ -50,7 +50,7 @@ if __name__ == '__main__':
       rotation_axis=(0, 0, 1),
       codimensional=True,
       angular_damping=damping,
-      mesh_fn='projects/mpm/data/ww_sides.obj')
+      mesh_fn='$mpm/ww_sides.obj')
 
   object4 = mpm.add_particles(
       type='rigid',
@@ -61,7 +61,7 @@ if __name__ == '__main__':
       rotation_axis=(0, 0, 1),
       codimensional=True,
       angular_damping=damping,
-      mesh_fn='projects/mpm/data/ww_spoke.obj')
+      mesh_fn='$mpm/ww_spoke.obj')
 
   def frame_update(t, frame_dt):
     tex = tc.Texture('ring', outer=0.05)

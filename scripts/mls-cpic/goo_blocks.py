@@ -45,6 +45,6 @@ if __name__ == '__main__':
           initial_position=(0.375 + id * 0.125, 0.7, 0.5),
           initial_rotation=(40, 50, 0),
           codimensional=False,
-          mesh_fn='projects/mpm/data/cube_smooth.obj')
+          mesh_fn='$mpm/cube_smooth.obj')
 
   mpm.simulate(clear_output_directory=True, frame_update=frame_update)

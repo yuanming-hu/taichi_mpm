@@ -36,7 +36,7 @@ if __name__ == '__main__':
         scripted_position=tc.constant_function13(pos),
         scripted_rotation=tc.constant_function13(tc.Vector(0, 0, 0)),
         codimensional=False,
-        mesh_fn='projects/mpm/data/cube_smooth_coarse.obj')
+        mesh_fn='$mpm/cube_smooth_coarse.obj')
 
   ratio1 = 0.398
   for j in range(2):
@@ -49,7 +49,7 @@ if __name__ == '__main__':
           scale=(ratio1, ratio1, ratio1),
           initial_position=center,
           codimensional=False,
-          mesh_fn='projects/mpm/data/cube_smooth_coarse.obj')
+          mesh_fn='$mpm/cube_smooth_coarse.obj')
 
   rho0 = 1000
   t0 = 1.6
@@ -63,7 +63,7 @@ if __name__ == '__main__':
           'mesh',
           translate=(x_pos, y_pos, 0.44),
           scale=(ratio2, ratio2, ratio2),
-          filename='projects/mpm/data/cylinder_jet.obj') * 10
+          filename='$mpm/cylinder_jet.obj') * 10
       mpm.add_particles(
           type='water',
           pd_source=True,
@@ -75,7 +75,7 @@ if __name__ == '__main__':
           'mesh',
           translate=(x_pos, y_pos, 0.56),
           scale=(ratio2, ratio2, ratio2),
-          filename='projects/mpm/data/cylinder_jet.obj') * 10
+          filename='$mpm/cylinder_jet.obj') * 10
       mpm.add_particles(
           type='water',
           pd_source=True,

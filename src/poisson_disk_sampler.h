@@ -141,14 +141,10 @@ class PoissonDiskSampler {
 
  public:
   PoissonDiskSampler() {
-    std::string full_fn;
-    if (dim == 2)
-      full_fn = std::getenv("TAICHI_REPO_DIR") +
-                std::string("/projects/mpm/data/periodic_pd_2d.dat");
-    else if (dim == 3)
-      full_fn = std::getenv("TAICHI_REPO_DIR") +
-                std::string("/projects/mpm/data/periodic_pd_3d.dat");
+    std::string full_fn =
+        absolute_path(fmt::format("$mpm/periodic_pd_{}d.dat", dim));
     std::ifstream is(full_fn, std::ifstream::in | std::ifstream::binary);
+    TC_ASSERT(is.is_open());
     is.read((char *)(&points_size), sizeof(size_t));
     points_list.resize(points_size * dim);
     is.read((char *)(&points_list[0]), sizeof(float) * points_size * dim);
@@ -184,9 +180,9 @@ class PoissonDiskSampler {
           new_point[d] = points_list[i * dim + d];
         new_point = new_point * min_distance + min_corner;
         for (auto &ind : region_id) {
-          Vector coord = new_point +
-                         region_size * (ind.get_ipos().template cast<real>() +
-                                        Vector(0.5_f));
+          Vector coord =
+              new_point + region_size * (ind.get_ipos().template cast<real>() +
+                                         Vector(0.5_f));
           real sample = density_texture->sample(coord).x;
           if (sample > 0.0_f)
             samples.push_back(coord);
@@ -255,7 +251,7 @@ class PoissonDiskSampler {
     }
   }
 
-  // call this function to generate precomputed periodic data
+  // This function generates precomputed periodic data
   void write_periodic_data() {
     std::vector<Vector> samples;
 
@@ -314,13 +310,8 @@ class PoissonDiskSampler {
         active_list.pop_back();
     }
 
-    std::string full_fn;
-    if (dim == 2)
-      full_fn = std::getenv("TAICHI_REPO_DIR") +
-                std::string("/projects/mpm/data/periodic_pd_2d.dat");
-    else if (dim == 3)
-      full_fn = std::getenv("TAICHI_REPO_DIR") +
-                std::string("/projects/mpm/data/periodic_pd_3d.dat");
+    std::string full_fn =
+        absolute_path(fmt::format("$mpm/periodic_pd_{}d.dat", dim));
     std::ofstream os(full_fn, std::ofstream::out | std::ofstream::binary);
     size_t size = samples.size();
     os.write((char *)(&size), sizeof(size_t));
