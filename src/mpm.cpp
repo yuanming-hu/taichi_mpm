@@ -41,7 +41,7 @@ void MPM<dim>::initialize(const Config &config) {
   TC_ASSERT_INFO(!config.has_key("delta_t"),
                  "Please use 'base_delta_t' instead of 'delta_t'");
   base_delta_t = config.get("base_delta_t", 1e-4_f);
-  base_delta_t *= config.get("dt-multiplier", 1.0_f);
+  base_delta_t *= config.get("dt_multiplier", 1.0_f);
   reorder_interval = config.get<int>("reorder_interval", 1000);
   cfl = config.get("cfl", 1.0f);
   particle_gravity = config.get<bool>("particle_gravity", true);
@@ -64,14 +64,6 @@ void MPM<dim>::initialize(const Config &config) {
   rigid_page_map = std::make_unique<SPGrid_Page_Map<log2_size>>(*grid);
   fat_page_map = std::make_unique<SPGrid_Page_Map<log2_size>>(*grid);
   grid_region = Region(Vectori(0), res + VectorI(1), Vector(0));
-
-  /*
-  // Restart?
-  pakua = create_instance<Pakua>("json");
-  Config config_;
-  config_.set("frame_directory", config.get_string("frame_directory"));
-  pakua->initialize(config_);
-  */
 
   if (config.get("energy_experiment", false)) {
     TC_ASSERT(config.get("optimized", true) == false);
@@ -280,19 +272,6 @@ std::string MPM<dim>::add_particles(const Config &config) {
 template <int dim>
 std::vector<RenderParticle> MPM<dim>::get_render_particles() const {
   return std::vector<RenderParticle>();
-  /*
-  std::vector<RenderParticle> render_particles;
-  render_particles.reserve(particles.size());
-  Vector center(res.template cast<real>() * 0.5f);
-  for (auto p_p : particles) {
-    Particle &p = *p_p;
-    // at least synchronize the position
-    Vector pos = p.pos * inv_delta_x - center;
-    render_particles.push_back(
-        RenderParticle(Vector3(pos), Vector4(0.8f, 0.9f, 1.0f, 0.5f)));
-  }
-  return render_particles;
-  */
 }
 
 template <int dim>
@@ -430,41 +409,6 @@ void MPM<3>::apply_dirichlet_boundary_conditions() {
           VectorP(v, get_grid(ind).velocity_and_mass[3]);
     }
   }
-  //  real radius = config_backup.get("dirichlet_boundary_radius", 0.0_f);
-  //  real linear_v =
-  //      config_backup.get("dirichlet_boundary_linear_velocity", 0.0_f);
-  //
-  //  TC_ASSERT_INFO(!config_backup.has_key("dirichlet_boundary_angular_velocity"),
-  //                 "Use 'dirichlet_boundary_rotation_cycle' instead of "
-  //                 "'dirichlet_boundary_angular_velocity'.")
-  //  real rotation_cycle =
-  //      config_backup.get("dirichlet_boundary_rotation_cycle", 0.0_f);
-  //  for (auto &ind_ : grid_region) {
-  //    Vectori ind = ind_.get_ipos();
-  //    Vector pos = Vector(ind) * delta_x;
-  //    real dist_to_x = sqrt(sqr(pos[1] - 0.5_f) + sqr(pos[2] - 0.5_f));
-  //    if (sqrt(sqr(pos[0] - 0.5f) + sqr(pos[1] - 0.5_f) + sqr(pos[2] - 0.5_f))
-  //    <
-  //        radius) {
-  //      Vector v;
-  //      // avoid atan2(0, 0)
-  //      if (dist_to_x < eps) {
-  //        v = Vector(linear_v, 0.0_f, 0.0_f);
-  //      } else {
-  //        real rotation_angle = atan2(pos[1] - 0.5_f, pos[2] - 0.5_f);
-  //        real rotation_speed;
-  //        if (rotation_cycle > 0.0_f) {
-  //          rotation_speed = dist_to_x * 2.0_f * M_PI / rotation_cycle;
-  //        } else {
-  //          rotation_speed = 0.0_f;
-  //        }
-  //        v = Vector(linear_v, rotation_speed * cos(rotation_angle),
-  //                   -rotation_speed * sin(rotation_angle));
-  //      }
-  //      get_grid(ind).velocity_and_mass =
-  //          VectorP(v, get_grid(ind).velocity_and_mass[3]);
-  //    }
-  //  }
 }
 
 template <int dim>

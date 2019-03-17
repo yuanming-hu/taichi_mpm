@@ -628,8 +628,7 @@ class SandParticle : public MPMParticle<dim> {
   Matrix calculate_force() override {
     Matrix u, v, sig, dg = this->dg_e;
     svd(this->dg_e, u, sig, v);
-    Matrix log_sig(
-        sig.diag().template map(static_cast<real (*)(real)>(std::log)));
+    Matrix log_sig(sig.diag().map(static_cast<real (*)(real)>(std::log)));
     Matrix inv_sig(Vector(1.0_f) / sig.diag());
     Matrix center = 2.0_f * mu_0 * inv_sig * log_sig +
                     lambda_0 * (log_sig.diag().sum()) * inv_sig;
@@ -787,7 +786,7 @@ class ElasticParticle : public MPMParticle<dim> {
     Matrix u, v, sig;
     svd(this->dg_e, u, sig, v);
     Vector log_sigma =
-        sig.diag().abs().template map(static_cast<real (*)(real)>(std::log));
+        sig.diag().abs().map(static_cast<real (*)(real)>(std::log));
     Vector log_sigma_squared;
     for (int d = 0; d < dim; ++d)
       log_sigma_squared[d] = log_sigma[d] * log_sigma[d];
@@ -799,8 +798,7 @@ class ElasticParticle : public MPMParticle<dim> {
   Matrix calculate_force() override {
     Matrix u, v, sig, dg = this->dg_e;
     svd(this->dg_e, u, sig, v);
-    Matrix log_sig(
-        sig.diag().template map(static_cast<real (*)(real)>(std::log)));
+    Matrix log_sig(sig.diag().map(static_cast<real (*)(real)>(std::log)));
     Matrix inv_sig(Vector(1.0_f) / sig.diag());
     Matrix center = 2.0_f * mu_0 * inv_sig * log_sig +
                     lambda_0 * (log_sig.diag().sum()) * inv_sig;
