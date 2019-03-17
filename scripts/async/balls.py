@@ -53,7 +53,7 @@ if __name__ == '__main__':
       translate=((0, 0, 0)),
       scale=(radius, radius, radius),
       adaptive=True,
-      filename='../../data/sphere_small.obj') * 8
+      filename='$mpm/sphere_small.obj') * 8
   for i in range(n):
     for j in range(n):
       center = (first + i * box, 0.5 + box * 0.5, first + j * box)

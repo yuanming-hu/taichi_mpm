@@ -46,7 +46,7 @@ if __name__ == '__main__':
       translate=(0.5, 0.5, 0.5),
       scale=(0.005, 0.005, 0.005),
       adaptive=True,
-      filename='../../data/stork.obj') * 12
+      filename='$mpm/stork.obj') * 12
   tex = tc.Texture(
       'rotate', tex=tex, rotate_axis=1, rotate_times=1).translate((0.1, 0, 0))
   tex_up = tc.Texture(

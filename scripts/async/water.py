@@ -41,7 +41,7 @@ if __name__ == '__main__':
       translate=(0.5, 0.5, 0.5),
       scale=(0.012, 0.012, 0.012),
       adaptive=True,
-      filename='../../data/cute_dragon.obj') * 8
+      filename='$mpm/cute_dragon.obj') * 8
   tex = tc.Texture(
       'rotate', tex=tex, rotate_axis=1, rotate_times=3).translate((0.1, -0.125,
                                                                    0))

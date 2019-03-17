@@ -41,7 +41,7 @@ if __name__ == '__main__':
       translate=(0.5, 0.5, 0.5),
       scale=(0.012, 0.012, 0.012),
       adaptive=True,
-      filename='../../data/cute_dragon.obj') * 8
+      filename='$mpm/cute_dragon.obj') * 8
   tex = tc.Texture(
       'rotate', tex=tex, rotate_axis=1, rotate_times=3).translate((0.1, -0.125,
                                                                    0))
@@ -58,7 +58,7 @@ if __name__ == '__main__':
       translate=(0, 0, 0),
       scale=(0.015, 0.015, 0.015),
       adaptive=True,
-      filename='../../data/sphere_small.obj') * 8
+      filename='$mpm/sphere_small.obj') * 8
   seed(1)
   for i in range(6):
     x = 0.05 + random() * 0.05

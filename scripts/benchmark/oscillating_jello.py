@@ -20,7 +20,7 @@ if __name__ == '__main__':
       translate=(0.5, 0.5, 0.5),
       scale=(0.4, 0.4, 0.4),
       adaptive=False,
-      filename='../../data/box.obj') * 8
+      filename='$mpm/box.obj') * 8
 
   mpm.add_particles(
       type='jelly',
