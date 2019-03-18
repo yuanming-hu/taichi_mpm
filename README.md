@@ -10,7 +10,7 @@ By [Yuanming Hu (MIT CSAIL)](http://taichi.graphics/me/), [Yu Fang (Tsinghua Uni
  - (March 2019) Roberto Toro made [mls-mpm.js](https://github.com/r03ert0/mls-mpm.js) that runs in your browser!
  - (March 2019) This software is now released under the **MIT license**. Feel free to use it commercially. We would appreciate your acknoledgements if our software helps you.
 
-#### [[Introduction & Demo Video](https://www.youtube.com/watch?v=8iyvhGF9f7o)] [[Paper](http://taichi.graphics/wp-content/uploads/2018/05/mls-mpm-cpic.pdf)] [[Supplemental Document](http://taichi.graphics/wp-content/uploads/2018/04/mls-mpm-cpic-supp.pdf)] [[88-Line MLS-MPM](https://github.com/yuanming-hu/taichi_mpm#88-line-version-download)]
+#### [[Introduction & Demo Video](https://www.youtube.com/watch?v=8iyvhGF9f7o)] [[Paper](http://taichi.graphics/wp-content/uploads/2018/05/mls-mpm-cpic.pdf)] [[Supplemental Document](http://taichi.graphics/wp-content/uploads/2018/04/mls-mpm-cpic-supp.pdf)] [[88-Line MLS-MPM](https://github.com/yuanming-hu/taichi_mpm#88-line-version-mit-license-download-c--javascript-versions)]
 #### [[SIGGRAPH 2018 Fast Forward](https://youtu.be/9RlNEgwTtPI)] [[PDF Slides](https://github.com/yuanming-hu/taichi_mpm/releases/download/SIGGRAPH2018/mls-mpm-cpic-slides.pdf)] [[PDF Slides with Notes](https://github.com/yuanming-hu/taichi_mpm/releases/download/SIGGRAPH2018/mls-mpm-cpic-slides-with-notes.pdf)]
 
 
@@ -200,7 +200,7 @@ Questions go to yuanming _at_ mit.edu
 ```
 
 ## Installing the High-Performance 3D Solver
-(This is for installing the high-performance 2D/3D solver including MLS-MPM and CPIC. If you want to play with the 88-line MLS-MPM, you don't have to install anything - see [here](https://github.com/yuanming-hu/taichi_mpm#88-line-version-mit-license-download))
+(This is for installing the high-performance 2D/3D solver including MLS-MPM and CPIC. If you want to play with the 88-line MLS-MPM, you don't have to install anything - see [here](https://github.com/yuanming-hu/taichi_mpm#88-line-version-mit-license-download-c--javascript-versions))
 ### Linux
 Install [`taichi`](https://github.com/yuanming-hu/taichi) [[Instructions](https://taichi.readthedocs.io/en/latest/installation.html)].
 Then, in command line
