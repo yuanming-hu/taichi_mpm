@@ -68,7 +68,7 @@ std::string AsyncMPM<dim>::add_particles(const Config &config) {
     uint64 offset =
         (grid_offset >> SparseMask::data_bits >> SparseMask::block_bits) &
         scheduler_mask;
-    particle_pool[offset].emplace_back(this->allocator.pool[p]);
+    particle_pool[offset].push_back(this->allocator.pool[p]);
   }
   this->particles.clear();
   return ret;
@@ -357,12 +357,13 @@ void AsyncMPM<dim>::advance(int64 limit) {
                              SparseMask::block_bits) &
                             scheduler_mask;
             if (blocks[offset].continuous_dt_limit == limit) {
-              particle_pool[offset].emplace_back(this->allocator.pool[p]);
+              // TODO: why can't we use emplace_back here with clang++-7?
+              particle_pool[offset].push_back(this->allocator.pool[p]);
             } else if (has_copied[offset] &&
                        blocks[offset].continuous_dt_limit > limit &&
                        blocks[offset].local_min_dt_limit ==
                            current_t_int + limit) {
-              backup_pool[offset].emplace_back(this->allocator.pool[p]);
+              backup_pool[offset].push_back(this->allocator.pool[p]);
             }
           }
         });

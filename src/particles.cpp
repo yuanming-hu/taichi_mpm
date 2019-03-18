@@ -702,7 +702,7 @@ class VonMisesParticle : public MPMParticle<dim> {
     Matrix u, v, sig, dg = this->dg_e;
     svd(this->dg_e, u, sig, v);
     Matrix log_sig(
-        sig.diag().template map(static_cast<real (*)(real)>(std::log)));
+        sig.diag().map(static_cast<real (*)(real)>(std::log)));
     Matrix inv_sig(Vector(1.0_f) / sig.diag());
     Matrix center = 2.0_f * mu_0 * inv_sig * log_sig +
                     lambda_0 * (log_sig.diag().sum()) * inv_sig;
@@ -715,7 +715,7 @@ class VonMisesParticle : public MPMParticle<dim> {
     Matrix U, V, sigma;
     svd(this->dg_e, U, sigma, V);
     Matrix epsilon(
-        sigma.diag().template map(static_cast<real (*)(real)>(std::log)));
+        sigma.diag().map(static_cast<real (*)(real)>(std::log)));
     real trace_epsilon = epsilon.trace();
     Matrix epsilon_hat = epsilon - (trace_epsilon / (real)dim) * Matrix(1.0_f);
     real epsilon_hat_norm = epsilon_hat.frobenius_norm2();

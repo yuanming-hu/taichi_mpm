@@ -35,17 +35,19 @@ constexpr bool use_mls_mpm = false;
 // x64 Intrinsics
 // Do not move them to taichi main lib since MSVC forces
 // CPU intrinsics to have compile-time const parameters
+/*
 TC_FORCE_INLINE float32 extract_float32(const __m128 &s, int i) {
   int ret = _mm_extract_ps(s, i);
   return reinterpret_cast<float32 *>(&ret)[0];
 }
+*/
 
 /*
 TC_FORCE_INLINE __m128 broadcast(const __m128 &s, int i) {
   return _mm_shuffle_ps(s, s, 0x55 * i);
 }
 */
-#define broadcast(s, i) _mm_shuffle_ps((s), (s), 0x55 * (i))
+#define broadcast(s, i) _mm_shuffle_ps((s), (s), (0x55 * i))
 
 template <typename MPM, bool v_and_m_only = false>
 struct GridCache {
@@ -94,12 +96,12 @@ struct GridCache {
       for (int j = 0; j < scratch_y_size; j++) {
         for (int k = 0; k < scratch_z_size; k++) {
           TC_STATIC_IF(v_and_m_only) {
-            id(blocked[i][j][k]) =
+            blocked[i][j][k] =
                 grid_array(to_std_array(block_base_coord + Vector3i(i, j, k)))
                     .velocity_and_mass;
           }
           TC_STATIC_ELSE {
-            id(blocked[i][j][k]) =
+            blocked[i][j][k] =
                 grid_array(to_std_array(block_base_coord + Vector3i(i, j, k)));
           }
           TC_STATIC_END_IF
@@ -118,11 +120,11 @@ struct GridCache {
       for (int j = 0; j < scratch_y_size; j++) {
         for (int k = 0; k < scratch_z_size; k++) {
           TC_STATIC_IF(v_and_m_only) {
-            id(grid_array(to_std_array(block_base_coord + Vector3i(i, j, k)))
-                .velocity_and_mass) = blocked[i][j][k];
+            grid_array(to_std_array(block_base_coord + Vector3i(i, j, k)))
+                .velocity_and_mass = blocked[i][j][k];
           }
           TC_STATIC_ELSE {
-            id(grid_array(to_std_array(block_base_coord + Vector3i(i, j, k)))) =
+            grid_array(to_std_array(block_base_coord + Vector3i(i, j, k))) =
                 blocked[i][j][k];
           }
           TC_STATIC_END_IF
@@ -491,9 +493,6 @@ void MPM<3>::rasterize_optimized(real delta_t) {
         MLSMPMFastKernel32 kernel(_mm_sub_ps(pos_, grid_base_pos_f),
                                   inv_delta_x);
         const __m128(&kernels)[3][3] = kernel.kernels;
-        using KernelLinearized = real[3 * 3 * 4];
-        const KernelLinearized &kernels_linearized =
-            *reinterpret_cast<const KernelLinearized *>(&kernels[0][0][0]);
 #else
         Kernel kernel(Vector(pos_), inv_delta_x);
         const VectorP(&kernels)[3][3][3] = kernel.kernels;
@@ -773,9 +772,8 @@ void MPM<3>::resample_optimized() {
             }
             if (p.near_boundary()) {
               Vector tv = p.get_velocity() - v_g;
-              tv = tv -
-                   p.boundary_normal *
-                       std::min(0.0_f, dot(p.boundary_normal, tv));
+              tv = tv - p.boundary_normal *
+                            std::min(0.0_f, dot(p.boundary_normal, tv));
 
               fake_v =
                   friction_project(
@@ -864,7 +862,8 @@ void MPM<3>::resample_optimized() {
         const __m128(&kernels)[3][3] = kernel.kernels;
         using KernelLinearized = real[3 * 3 * 4];
         const KernelLinearized &kernels_linearized =
-            *reinterpret_cast<const KernelLinearized *>(&kernels[0][0][0]);
+            *reinterpret_cast<const KernelLinearized *>(
+                (float32 *)&kernels[0][0]);
 #else
         Kernel kernel(pos, inv_delta_x);
         const VectorP(&kernels)[3][3][3] = kernel.kernels;
@@ -883,7 +882,7 @@ void MPM<3>::resample_optimized() {
         __m128 v_ = _mm_setzero_ps();
         __m128 pos_ = pos.v;
         __m128 rela_pos = _mm_sub_ps(pos_, grid_base_pos_f);
-///
+        ///
 
 #if defined(MLSMPM)
 #define LOOP(node_id)                                                          \
@@ -898,9 +897,10 @@ void MPM<3>::resample_optimized() {
         _mm_set1_ps(kernels[node_id / 9][node_id / 3 % 3][node_id % 3]);       \
     v_ = _mm_fmadd_ps(grid_vel, w, v_);                                        \
     __m128 w_grid_vel = _mm_mul_ps(w, grid_vel);                               \
-    for (int r = 0; r < dim; r++) {                                            \
-      b_[r] = _mm_fmadd_ps(w_grid_vel, broadcast(dpos, r), b_[r]);             \
-    }                                                                          \
+    b_[0] = _mm_fmadd_ps(w_grid_vel, broadcast(dpos, 0), b_[0]);               \
+    b_[1] = _mm_fmadd_ps(w_grid_vel, broadcast(dpos, 1), b_[1]);               \
+    if (dim >= 3)                                                              \
+      b_[2] = _mm_fmadd_ps(w_grid_vel, broadcast(dpos, 2), b_[2]);             \
   }
 #else
 #define LOOP(node_id)                                                          \
