@@ -58,7 +58,7 @@ ParticlesDataMutable *readBGEO(const char *filename, const bool headersOnly) {
 bool writeBGEO(const char *filename,
                const ParticlesData &p,
                const bool compressed) {
-  auto_ptr<ostream> output(
+  std::unique_ptr<std::ostream> output(
       compressed ? Gzip_Out(filename, ios::out | ios::binary)
                  : new ofstream(filename, ios::out | ios::binary));
 

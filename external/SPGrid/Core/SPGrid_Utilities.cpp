@@ -100,11 +100,15 @@ void Raw_Deallocate(void* data, const size_t size)
 //#####################################################################
 void Deactivate_Page(void* data, const size_t size)
 {
+    printf("Deactive_Page in SPGrid is no longer supported");
+    exit(-1);
+    /*
     if(0xfffUL&(uint64_t)data) FATAL_ERROR("Allocated pointer value "+Value_To_String(data)+" is not page-aligned");
     int ret=madvise(data,size,MADV_DONTNEED);
     if(ret<0){char buffer[256];
         char *error_message=strerror_r(errno,buffer,256);
         FATAL_ERROR("Failed to deallocate "+Value_To_String(size)+" bytes, ERROR: "+error_message);}
+        */
 }
 //#####################################################################
 // Function Check_Address_Resident
