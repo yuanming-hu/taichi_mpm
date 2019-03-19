@@ -5,6 +5,8 @@ For the reproducibility of, and further development on **A Moving Least Squares 
 
 By [Yuanming Hu (MIT CSAIL)](http://taichi.graphics/me/), [Yu Fang (Tsinghua University)](http://squarefk.com/), Ziheng Ge (University of Science and Technology of China), Ziyin Qu (University of Pennsylvania), [Yixin Zhu (UCLA)](https://www.yzhu.io/), [Andre Pradhana (University of Pennsylvania)](https://www.seas.upenn.edu/~apradh/menu/about.html), [Chenfanfu Jiang (University of Pennsylvania)](https://www.seas.upenn.edu/~cffjiang/).
 
+Discussion Forum: [![Join the chat at https://gitter.im/taichi-dev/Lobby](https://badges.gitter.im/taichi-dev/Lobby.svg)](https://gitter.im/taichi-dev/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 ### News
  - (March 2019) David Medina contributed [mls-mpm88-explained.cpp](https://github.com/yuanming-hu/taichi_mpm/blob/master/mls-mpm88-explained.cpp) which is much easier to read than the original 88-line version.
  - (March 2019) Roberto Toro made [mls-mpm.js](https://github.com/r03ert0/mls-mpm.js) that runs in your browser!
