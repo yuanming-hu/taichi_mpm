@@ -8,6 +8,7 @@ By [Yuanming Hu (MIT CSAIL)](http://taichi.graphics/me/), [Yu Fang (Tsinghua Uni
 Discussion Forum: [![Join the chat at https://gitter.im/taichi-dev/Lobby](https://badges.gitter.im/taichi-dev/Lobby.svg)](https://gitter.im/taichi-dev/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 ### News
+ - (May 2019) Check out niall's MLS-MPM [Unity implementation](https://github.com/nialltl/incremental_mpm) and [tutorial](https://nialltl.neocities.org/articles/mpm_guide.html)! 
  - (March 2019) David Medina contributed [mls-mpm88-explained.cpp](https://github.com/yuanming-hu/taichi_mpm/blob/master/mls-mpm88-explained.cpp) which is much easier to read than the original 88-line version.
  - (March 2019) Roberto Toro made [mls-mpm.js](https://github.com/r03ert0/mls-mpm.js) that runs in your browser!
  - (March 2019) This software is now released under the **MIT license**. Feel free to use it commercially. We would appreciate your acknoledgements if our software helps you.
