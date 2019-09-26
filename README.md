@@ -1,7 +1,7 @@
 #  High-Performance MLS-MPM Solver with Cutting and Coupling (CPIC)  *(MIT License now!)*
 <img src="https://github.com/yuanming-hu/public_files/raw/master/graphics/mls-mpm-cpic/water_wheel.gif"> <img src="https://github.com/yuanming-hu/public_files/raw/master/graphics/mls-mpm-cpic/sand_paddles.gif">
 
-For the reproducibility of, and further development on **A Moving Least Squares Material Point Method with Displacement Discontinuity and Two-Way Rigid Body Coupling**, ACM Transactions on Graphics (SIGGRAPH 2018).
+**A Moving Least Squares Material Point Method with Displacement Discontinuity and Two-Way Rigid Body Coupling**, ACM Transactions on Graphics (SIGGRAPH 2018).
 
 By [Yuanming Hu (MIT CSAIL)](http://taichi.graphics/me/), [Yu Fang (Tsinghua University)](http://squarefk.com/), Ziheng Ge (University of Science and Technology of China), Ziyin Qu (University of Pennsylvania), [Yixin Zhu (UCLA)](https://www.yzhu.io/), [Andre Pradhana (University of Pennsylvania)](https://www.seas.upenn.edu/~apradh/menu/about.html), [Chenfanfu Jiang (University of Pennsylvania)](https://www.seas.upenn.edu/~cffjiang/).
 
