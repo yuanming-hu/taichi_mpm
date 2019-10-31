@@ -206,7 +206,7 @@ Questions go to yuanming _at_ mit.edu
 ## Installing the High-Performance 3D Solver
 (This is for installing the high-performance 2D/3D solver including MLS-MPM and CPIC. If you want to play with the 88-line MLS-MPM, you don't have to install anything - see [here](https://github.com/yuanming-hu/taichi_mpm#88-line-version-mit-license-download-c--javascript-versions))
 ### Linux and OSX
-Install [`taichi`](https://github.com/yuanming-hu/taichi) [[Instructions](https://taichi.readthedocs.io/en/latest/installation.html)].
+Install [`taichi (legacy branch)`](https://github.com/yuanming-hu/taichi) [[Instructions](https://taichi.readthedocs.io/en/latest/installation.html)].
 Then, in command line
 ```
 ti install mpm
