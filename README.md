@@ -3,18 +3,18 @@
 
 **A Moving Least Squares Material Point Method with Displacement Discontinuity and Two-Way Rigid Body Coupling**, ACM Transactions on Graphics (SIGGRAPH 2018).
 
-By [Yuanming Hu (MIT CSAIL)](http://taichi.graphics/me/), [Yu Fang (Tsinghua University)](http://squarefk.com/), Ziheng Ge (University of Science and Technology of China), Ziyin Qu (University of Pennsylvania), [Yixin Zhu (UCLA)](https://www.yzhu.io/), [Andre Pradhana (University of Pennsylvania)](https://www.seas.upenn.edu/~apradh/menu/about.html), [Chenfanfu Jiang (University of Pennsylvania)](https://www.seas.upenn.edu/~cffjiang/).
+By [Yuanming Hu (MIT CSAIL)](https://taichi.graphics/me/), [Yu Fang (Tsinghua University)](http://squarefk.com/), Ziheng Ge (University of Science and Technology of China), Ziyin Qu (University of Pennsylvania), [Yixin Zhu (UCLA)](https://www.yzhu.io/), [Andre Pradhana (University of Pennsylvania)](https://www.seas.upenn.edu/~apradh/menu/about.html), [Chenfanfu Jiang (University of Pennsylvania)](https://www.seas.upenn.edu/~cffjiang/).
 
-Discussion Forum: [![Join the chat at https://gitter.im/taichi-dev/Lobby](https://badges.gitter.im/taichi-dev/Lobby.svg)](https://gitter.im/taichi-dev/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+Welcome to join the [Discussion Forum](https://forum.taichi.graphics/).
 
 ### News
- - (August 2019) Check out our [SIGGRAPH 2019 course on high-performance MPM](http://taichi.graphics/mpm_course2019/)!
+ - (August 2019) Check out our [SIGGRAPH 2019 course on high-performance MPM](https://yuanming.taichi.graphics/publication/2019-mpm-tutorial/)!
  - (May 2019) Check out niall's MLS-MPM [Unity implementation](https://github.com/nialltl/incremental_mpm) and [tutorial](https://nialltl.neocities.org/articles/mpm_guide.html)! 
  - (March 2019) David Medina contributed [mls-mpm88-explained.cpp](https://github.com/yuanming-hu/taichi_mpm/blob/master/mls-mpm88-explained.cpp) which is much easier to read than the original 88-line version.
  - (March 2019) Roberto Toro made [mls-mpm.js](https://github.com/r03ert0/mls-mpm.js) that [runs in your browser](https://r03ert0.github.io/mls-mpm.js/index.html)!
  - (March 2019) This software is now released under the **MIT license**. Feel free to use it commercially. We would appreciate your acknoledgements if our software helps you.
 
-#### [[Introduction & Demo Video](https://www.youtube.com/watch?v=8iyvhGF9f7o)] [[Paper](http://taichi.graphics/wp-content/uploads/2019/03/mls-mpm-cpic.pdf)] [[Supplemental Document](http://taichi.graphics/wp-content/uploads/2018/04/mls-mpm-cpic-supp.pdf)] [[88-Line MLS-MPM](https://github.com/yuanming-hu/taichi_mpm#88-line-version-mit-license-download-c--javascript-versions)]
+#### [[Introduction & Demo Video](https://www.youtube.com/watch?v=8iyvhGF9f7o)] [[Paper](https://yuanming.taichi.graphics/publication/2018-mlsmpm/mls-mpm-cpic.pdf)] [[Supplemental Document](https://yuanming.taichi.graphics/publication/2018-mlsmpm/mls-mpm-cpic-supp.pdf)] [[88-Line MLS-MPM](https://github.com/yuanming-hu/taichi_mpm#88-line-version-mit-license-download-c--javascript-versions)]
 #### [[SIGGRAPH 2018 Fast Forward](https://youtu.be/9RlNEgwTtPI)] [[PDF Slides](https://github.com/yuanming-hu/taichi_mpm/releases/download/SIGGRAPH2018/mls-mpm-cpic-slides.pdf)] [[PDF Slides with Notes](https://github.com/yuanming-hu/taichi_mpm/releases/download/SIGGRAPH2018/mls-mpm-cpic-slides-with-notes.pdf)]
 
 
