@@ -26,7 +26,7 @@ struct SmallVector {
   TC_FORCE_INLINE std::size_t size() const {
     return (std::size_t)tail;
   }
-  TC_FORCE_INLINE void resize(std::size_t s) const {
+  TC_FORCE_INLINE void resize(std::size_t s) {
     tail = (int)s;
   }
   TC_FORCE_INLINE const T *begin() const {
