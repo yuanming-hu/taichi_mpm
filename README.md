@@ -8,7 +8,7 @@ By [Yuanming Hu (MIT CSAIL)](http://taichi.graphics/me/), [Yu Fang (Tsinghua Uni
 Discussion Forum: [![Join the chat at https://gitter.im/taichi-dev/Lobby](https://badges.gitter.im/taichi-dev/Lobby.svg)](https://gitter.im/taichi-dev/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 ### News
- - (August 2019) Check out our [SIGGRAPH 2019 course on high-performance MPM](http://taichi.graphics/mpm_course2019/)!
+ - (August 2019) Check out our [SIGGRAPH 2019 course on high-performance MPM](https://yuanming.taichi.graphics/publication/2019-mpm-tutorial/)!
  - (May 2019) Check out niall's MLS-MPM [Unity implementation](https://github.com/nialltl/incremental_mpm) and [tutorial](https://nialltl.neocities.org/articles/mpm_guide.html)! 
  - (March 2019) David Medina contributed [mls-mpm88-explained.cpp](https://github.com/yuanming-hu/taichi_mpm/blob/master/mls-mpm88-explained.cpp) which is much easier to read than the original 88-line version.
  - (March 2019) Roberto Toro made [mls-mpm.js](https://github.com/r03ert0/mls-mpm.js) that [runs in your browser](https://r03ert0.github.io/mls-mpm.js/index.html)!
