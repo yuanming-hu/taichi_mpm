@@ -1,11 +1,11 @@
-#  High-Performance MLS-MPM Solver with Cutting and Coupling (CPIC)  *(MIT License now!)*
+#  High-Performance MLS-MPM Solver with Cutting and Coupling (CPIC)  *(MIT License)*
 <img src="https://github.com/yuanming-hu/public_files/raw/master/graphics/mls-mpm-cpic/water_wheel.gif"> <img src="https://github.com/yuanming-hu/public_files/raw/master/graphics/mls-mpm-cpic/sand_paddles.gif">
 
 **A Moving Least Squares Material Point Method with Displacement Discontinuity and Two-Way Rigid Body Coupling**, ACM Transactions on Graphics (SIGGRAPH 2018).
 
-By [Yuanming Hu (MIT CSAIL)](http://taichi.graphics/me/), [Yu Fang (Tsinghua University)](http://squarefk.com/), Ziheng Ge (University of Science and Technology of China), Ziyin Qu (University of Pennsylvania), [Yixin Zhu (UCLA)](https://www.yzhu.io/), [Andre Pradhana (University of Pennsylvania)](https://www.seas.upenn.edu/~apradh/menu/about.html), [Chenfanfu Jiang (University of Pennsylvania)](https://www.seas.upenn.edu/~cffjiang/).
+By [Yuanming Hu (MIT CSAIL)](https://yuanming.taichi.graphics/), [Yu Fang (Tsinghua University)](http://squarefk.com/), Ziheng Ge (University of Science and Technology of China), Ziyin Qu (University of Pennsylvania), [Yixin Zhu (UCLA)](https://www.yzhu.io/), [Andre Pradhana (University of Pennsylvania)](https://www.seas.upenn.edu/~apradh/menu/about.html), [Chenfanfu Jiang (University of Pennsylvania)](https://www.seas.upenn.edu/~cffjiang/).
 
-Discussion Forum: [![Join the chat at https://gitter.im/taichi-dev/Lobby](https://badges.gitter.im/taichi-dev/Lobby.svg)](https://gitter.im/taichi-dev/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+Welcome to join the [Discussion Forum](https://forum.taichi.graphics/).
 
 ### News
  - (August 2019) Check out our [SIGGRAPH 2019 course on high-performance MPM](https://yuanming.taichi.graphics/publication/2019-mpm-tutorial/)!
@@ -14,7 +14,7 @@ Discussion Forum: [![Join the chat at https://gitter.im/taichi-dev/Lobby](https:
  - (March 2019) Roberto Toro made [mls-mpm.js](https://github.com/r03ert0/mls-mpm.js) that [runs in your browser](https://r03ert0.github.io/mls-mpm.js/index.html)!
  - (March 2019) This software is now released under the **MIT license**. Feel free to use it commercially. We would appreciate your acknoledgements if our software helps you.
 
-#### [[Introduction & Demo Video](https://www.youtube.com/watch?v=8iyvhGF9f7o)] [[Paper](http://taichi.graphics/wp-content/uploads/2019/03/mls-mpm-cpic.pdf)] [[Supplemental Document](http://taichi.graphics/wp-content/uploads/2018/04/mls-mpm-cpic-supp.pdf)] [[88-Line MLS-MPM](https://github.com/yuanming-hu/taichi_mpm#88-line-version-mit-license-download-c--javascript-versions)]
+#### [[Introduction & Demo Video](https://www.youtube.com/watch?v=8iyvhGF9f7o)] [[Paper](https://yuanming.taichi.graphics/publication/2018-mlsmpm/mls-mpm-cpic.pdf)] [[Supplemental Document](https://yuanming.taichi.graphics/publication/2018-mlsmpm/mls-mpm-cpic-supp.pdf)] [[88-Line MLS-MPM](https://github.com/yuanming-hu/taichi_mpm#88-line-version-mit-license-download-c--javascript-versions)]
 #### [[SIGGRAPH 2018 Fast Forward](https://youtu.be/9RlNEgwTtPI)] [[PDF Slides](https://github.com/yuanming-hu/taichi_mpm/releases/download/SIGGRAPH2018/mls-mpm-cpic-slides.pdf)] [[PDF Slides with Notes](https://github.com/yuanming-hu/taichi_mpm/releases/download/SIGGRAPH2018/mls-mpm-cpic-slides-with-notes.pdf)]
 
 
@@ -25,6 +25,12 @@ Discussion Forum: [![Join the chat at https://gitter.im/taichi-dev/Lobby](https:
 
 
 ## 88-Line Version (MIT License) [[Download C++ & Javascript versions](https://github.com/yuanming-hu/taichi_mpm/releases/download/SIGGRAPH2018/mls-mpm88.zip)]
+
+--------
+
+**Update Nov 2021: with the new [Taichi programming language](https://github.com/taichi-dev/taichi), you can run [MLS-MPM on GPU](https://github.com/taichi-dev/taichi/blob/master/python/taichi/examples/simulation/mpm128.py) with Python 3 after `pip install taichi`**
+
+--------
 
 Supports Linux, OS X and Windows. Tested on Ubuntu 16.04, Ubuntu 18.04, Arch Linux, MinGW, VS2017, OS X 10.11~10.14.
 No need to install `taichi` or `taichi_mpm` - see the end of code for instructions.
@@ -187,7 +193,7 @@ A5: Uncomment Ln 2 and 85 and create a folder named "tmp".
 
     where 60 stands for 60 FPS. A file named "video.mp4" is what you want.
 
-Q6: How is taichi.h generated?
+Q6: How was taichi.h generated?
 A6: Please check out my #include <taichi> talk:
     http://taichi.graphics/wp-content/uploads/2018/11/include_taichi.pdf
     and the generation script:
@@ -377,7 +383,7 @@ Syntax:
 # Performance
 
 # Bibtex
-Please cite our [paper](http://taichi.graphics/wp-content/uploads/2019/03/mls-mpm-cpic.pdf) if you use this code for your research: 
+Please cite our [paper](https://yuanming.taichi.graphics/publication/2018-mlsmpm/) if you use this code for your research: 
 ```
 @article{hu2018mlsmpmcpic,
   title={A Moving Least Squares Material Point Method with Displacement Discontinuity and Two-Way Rigid Body Coupling},
